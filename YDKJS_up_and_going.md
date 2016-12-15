@@ -1,5 +1,6 @@
 # Notes from You Don't Know Javascript - Up & Going #
-[https://github.com/getify/You-Dont-Know-JS](You Don't Know Javascript)
+[You Don't Know JavaScript - Up & Going]
+(https://github.com/getify/You-Dont-Know-JS/tree/master/up%20%26%20going)
 
 # Chapter 1: Into Programming #
 ## Statements ##
@@ -48,4 +49,4 @@ Types of operators:
 - Comparison: <, >, <= (less than or loose equals), >= (greater than or loose
 equals)
 - Logical: &&, ||
-- also see [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators](MDN)
+- also see [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators)
