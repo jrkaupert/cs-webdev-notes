@@ -62,15 +62,12 @@ equals)
 ### Converting between types ###
 - *coercion* lets you force values to different types
 - example:
-
+```javascript
       var x = "301";
-
       var y = Number(x);
-
-      console.log(x); // "301"
-      
+      console.log(x); // "301"    
       console.log(y); // 301
-
+```
 - We can explicitly coerce as in previous example, or implicitly coerce when
 performing a comparison of two items that are not the same type
   - If two items are not of same type, implicit coercion checks if loosely equal
