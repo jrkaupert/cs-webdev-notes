@@ -63,10 +63,10 @@ equals)
 - *coercion* lets you force values to different types
 - example:
 ```javascript
-      var x = "301";
-      var y = Number(x);
-      console.log(x); // "301"    
-      console.log(y); // 301
+var x = "301";
+var y = Number(x);
+console.log(x); // "301"    
+console.log(y); // 301
 ```
 - We can explicitly coerce as in previous example, or implicitly coerce when
 performing a comparison of two items that are not the same type
@@ -92,3 +92,73 @@ the execution of a program and are typically all uppercase with underscores
 between words.  Constants can also be specified using the `const` declaration
 in ES6, and will produce validation errors in strict mode if changed during
 program execution
+
+## Blocks ##
+- A series of statements captured together in a set of { } braces, usually
+attached to a control statement
+- blocks do not require semicolons to end them
+
+## Conditionals ##
+- decision points in a program
+- *if* statements require boolean expression to determine if block executed
+- *else* clause provides alternative branch if the *if* condition not true
+- example:
+  ```javascript
+  if (value < limit) {
+    console.log("Value is less than the limit.");
+  }
+  else {
+    console.log("Value is greater than or equal to the limit.")
+  }
+  ```
+- values that are not of expected type will be coerced!
+
+## Loops ##
+- *while* and *do..while* loops can be used to repeat actions until a condition
+fails to be met
+- examples:
+```javascript
+// while loop
+while (counter > 0) {
+  console.log(counter);
+  counter = counter - 1;
+}
+// do..while loop
+do {
+  console.log(counter);
+  counter = counter - 1;
+} while (counter > 0);
+```
+- the *do..while* loop will always be executed at least once, even if condition
+is not met
+- *break* statement can be used to stop a loop mid-way
+- *for* loops can be used to iterate over specific set of values
+- example:
+```javascript
+for (var i = 0; i <= 5; i++) {
+  console.log(i);
+}
+```
+
+## Functions ##
+- *functions* allow code to be reused easily, letting code be called by a name
+- functions can take arguments / parameters to pass values in
+- example:
+```javascript
+function printAmount(amount) {
+  console.log( amount.toFixed(2) );
+}
+var amount = 50.123;
+printAmount(amount);
+```
+- functions can also return values
+
+## Scope ##
+- *lexical scope* refers to a collection of variables and how those variables
+are accessed by name.  
+- Names must be unique within a single scope, but can be
+repeated in different scopes without issues
+- Scopes can be nested.
+  - Code in one scope can access variables in own scope or any scope outside (but
+  not inside!.  
+  - Inner scopes cannot be accessed from outer ones)
