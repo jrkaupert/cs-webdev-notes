@@ -36,7 +36,7 @@ real-time and then immediately run
 - Operators let us act on variables and values
 - Variables should always be declared in advance with *var*
 
-Types of operators:
+### Types of operators: ###
 - Assignment: =
 - Mathematical: + - / *
 - Compound Assignment: +=, -=, \*=, /=.  a+=2 is same as a = a + 2
@@ -50,3 +50,45 @@ Types of operators:
 equals)
 - Logical: &&, ||
 - also see [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators)
+
+## Values & Types ##
+- *types* are representations for primitive values
+- *literals* are values included directly in source code
+  - `string` literals get wrapped in double quotes or single quotes (no
+    difference)
+  - `number` literals not wrapped in anything
+  - `boolean` literals not wrapped in anything
+
+### Converting between types ###
+- *coercion* lets you force values to different types
+- example:
+  ```
+  var x = "301";
+  var y = Number(x);
+  console.log(x); // "301"
+  console.log(y); // 301
+  ```
+- We can explicitly coerce as in previous example, or implicitly coerce when
+performing a comparison of two items that are not the same type
+  - If two items are not of same type, implicit coercion checks if loosely equal
+  (ie: using == or !== operators)
+  - Implicit coercion is not inherently bad and not a flaw of the language
+
+## Comments ##
+- Single line comments can be done via //
+- Multi-line comments can be done via /\* \*/
+
+## Variables ##
+- *variables* are symbolic containers for values
+- *static typing* or *type enforcement* requires variables be declared to hold
+specific types of values and prevents unintended value conversions
+- *dynamic typing* or *weak typing* allows variables to hold any value at any
+time, allowing flexibility.  This is what JavaScript uses
+- the `var` statement declares variables in JavaScript but no type is provided
+at declaration
+- variables are used to manage *state*
+- *constants* are used to represent values that should not change throughout
+the execution of a program and are typically all uppercase with underscores
+between words.  Constants can also be specified using the `const` declaration
+in ES6, and will produce validation errors in strict mode if changed during
+program execution
