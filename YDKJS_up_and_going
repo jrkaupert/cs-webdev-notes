@@ -1,0 +1,51 @@
+# Notes from You Don't Know Javascript - Up & Going #
+[https://github.com/getify/You-Dont-Know-JS](You Don't Know Javascript)
+
+# Chapter 1: Into Programming #
+## Statements ##
+- *Statements* are a series of words, numbers, and operators that perform a
+specific task
+- *Variables* are little boxes to store values in
+- *Literal Values* are just values not stored in variables
+- *Operators* allow you to perform actions using variables/values
+
+## Expressions ##
+- Statements made up of >= 1 expression, which combine variables, values, and
+operators
+- Types of expressions
+  1. literal value expressions - just a value
+  2. variable expressions - retrieve variable value
+  3. arithmetic expressions - perform arithmetic
+  4. assignment expressions - assign result of an operation to variable
+  5. call expressions - function calls
+
+## Executing a Program ##
+- Computer runs statements via interpreter or compiler to translate code into
+something it knows how to work with
+- JavaScript is usually called *interpreted* but is actually *compiled* in
+real-time and then immediately run
+
+## Try It Yourself ##
+- Code can be executed in the JavaScript console of browser dev tools
+- `console.log(stuff);` lets you print to console
+- `alert(stuff);` can be used to display a popup box with an "OK" button
+- `aVariable = prompt("text");` can be used to prompt user and save their input
+
+## Operators ##
+- Operators let us act on variables and values
+- Variables should always be declared in advance with *var*
+
+Types of operators:
+- Assignment: =
+- Mathematical: + - / *
+- Compound Assignment: +=, -=, *=, /=.  a+=2 is same as a = a + 2
+- Object Property Access: . (like console.log)
+- Equality:
+  - == (loose equals)
+  - === (strict equals)
+  - != (loose not equals)
+  - !== (strict not equals)
+- Comparison: <, >, <= (less than or loose equals), >= (greater than or loose
+equals)
+- Logical: &&, ||
+- also see [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators](MDN)
