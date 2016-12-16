@@ -233,3 +233,114 @@ typeof foo;     // "function"
 typeof foo();   // "number"
 typeof foo.bar; // "string"
 ```
+
+## Built-In Type Methods ##
+- Each of the JS built-in types and subtypes have their own useful properties
+and methods
+- examples:
+```javascript
+var a = "hi";
+var b = 125.24111
+
+a.length;        // 2
+a.toUpperCase(); // "HI"
+b.toFixed(4);    // "125.2411"
+```
+- For each of these methods, there's an object wrapper form called a "native"
+(like String, capital S) that is paired with the associated primitive type
+(like string, lower case s).  The object wrapper defines the associated method
+such as `toUpperCase()` on its prototype.
+- JavaScript handles ("boxes") things behind the scenes to allow primitives to
+reference these properties or methods
+- Can almost always use the primitive rather than the object wrapper
+
+## Comparing Values ##
+- two main types of comparison:
+  1. Equality
+  2. Inequality
+- any comparison results in a `boolean` value (`true` or `false`) regardless
+of what items are being compared
+
+### Coercion ###
+- two forms
+  1. *explicit* - forced by the code in an obvious way
+  2. *implicit* - occurs when the conversion is more of a non-obvious side
+  effect of another operation
+- coercion can produce strange results but can also be useful
+
+### Truthy and Falsy ###
+- list of *falsy* values
+  - "" (the empty string)
+  - 0, -0, `NaN` (invalid number)
+  - `null`, `undefined`
+  - `false`
+- Any value that is not *falsy* is *truthy*
+- Non-boolean values only use these properties when actually coerced to a
+`boolean`.
+
+### Equality ###
+- Difference between `==` and `===` is that `==` checks for value equality
+with coercion allowed, and `===` checks for value equality without coercion
+allowed ('strict equality')
+- Example:
+```javascript
+var a = '101';
+var b = 101;
+
+a == b;      // true, JS coerces until types match for comparison
+a === b;     // false, because coercion is not allowed
+```
+- in the above `==` case, a is coerced to an integer for the comparison because
+of the ordering
+- see [ECMA5 Section 11.9.3](http://www.ecma-international.org/ecma-262/5.1/)
+for more details on corner cases on coercion in comparisons
+
+Some simple rules for using `==` vs. `===`:
+1. if either side could be the `true` or `false` value, avoid `==`
+2. if either value could be `0`, "", or [] (empty array), avoid `==`
+3. Otherwise you can use `==`, which will often improve readability
+If you can't be sure of the values, use `===`
+
+For these comparisons, non-primitive values such as `object`, `function`, and
+`array` will be compared by reference and not by their underlying values
+
+### Inequality ###
+- Relational comparison can be performed using <, >, <=, and >=
+- usually used for comparing `number` types, but can also be used for `string`
+comparison
+- need to be careful as with `==` comparisons as coercion can occur.  Be careful
+when comparing different values of different types, especially when one value
+cannot be coerced into a valid number (resulting in `NaN`)
+
+## Variables ##
+- variable and function names must be valid *identifiers*.
+- *identifiers* must start with a-z, A-Z, $, or \_ and may then include
+the same characters plus 0-9
+- reserved words cannot be used as variables but are OK as property names,
+otherwise property names follow same rules as variables
+
+### Function Scopes ###
+- the `var` keyword is used to declare a variable in the current function scope
+or global scope if outside of all functions
+
+#### Hoisting ####
+- Regardless of where `var` is used in a scope, the declaration applies
+throughout that scope (even if the value itself is declared before `var` is
+used)
+- Example:
+```javascript
+var a = 2;
+
+foo();      // works because foo() declaration is hoisted
+
+function foo() {
+  a = 3;
+
+  console.log(a);   // 3
+  var a;            // declaration is hoisted to top of foo()
+}
+console.log(a);     // 2
+```
+- Should not rely on hoisting variables to use earlier in scope than `var`
+appears
+- Hoisted function declarations are commonly used, however
