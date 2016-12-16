@@ -162,3 +162,74 @@ repeated in different scopes without issues
   - Code in one scope can access variables in own scope or any scope outside (but
   not inside!.  
   - Inner scopes cannot be accessed from outer ones)
+
+# Chapter 2: Into JavaScript #
+- ES6 = 6th edition of ECMAScript specification
+
+## Values & Types ##
+Built-in types:
+- `string`
+- `number`
+- `boolean`
+- `null` and `undefined`
+- `object`
+- `symbol` (new in ES6 spec)
+
+The `typeof` operator can identify a value's type
+
+## Objects ##
+`object` type is a compound value that allows properties of the object to each
+have their own values of any JavaScript type
+- Properties can be accessed using dot notation or bracket notation. Example:
+```javascript
+var obj = {
+  a: "this is a string";
+  b: 101;
+  c: true
+};
+obj.a; // "this is a string"
+obj.b // 101
+obj.c // true
+
+obj["a"]; // "this is a string"
+obj["b"]; // 101
+obj["c"]; // true
+```
+- Dot notation is preferred, but bracket notation lets you handle properties
+with special characters and spaces.  Bracket notation requires a variable or
+string literal wrapped in quotes
+
+## Arrays ##
+- Arrays are objects that hold any type of value that are indexed numerically
+- Example:
+```javascript
+var arr = [
+  "hi",
+  101,
+  true
+];
+
+arr[0]; // "hi"
+arr[1]; // 101
+arr[2]; // true
+
+typeof arr; // "object"
+```
+- arrays have properties including `length` which is automatically updated as
+the array changes
+- use arrays for numerically indexed values and objects for named properties
+
+## Functions ##
+- functions are objects and have their own properties, but usually won't use
+their properties often
+- Example:
+```javascript
+function foo() {
+  return 101;
+}
+foo.bar = 'hi';
+
+typeof foo;     // "function"
+typeof foo();   // "number"
+typeof foo.bar; // "string"
+```
