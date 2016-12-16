@@ -344,3 +344,15 @@ console.log(a);     // 2
 - Should not rely on hoisting variables to use earlier in scope than `var`
 appears
 - Hoisted function declarations are commonly used, however
+
+#### Nested Scopes ####
+- Declared variables are available anywhere in the scope they are declared in,
+as well as any lower/inner scopes
+- You will get a `ReferenceError` thrown if trying to access a variable that
+is out of scope
+- If you try to set an undeclared variable, you will created a top-level
+global variable (if not in strict mode), or get an error (in strict mode)
+- ES6 allows variables to be declared for specific blocks using the `let`
+keyword.
+  - allows very detailed control of scoping.
+  - block scoping keeps variable within block, and not outer scopes
