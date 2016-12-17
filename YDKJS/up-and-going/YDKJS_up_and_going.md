@@ -1,6 +1,10 @@
 # Notes from You Don't Know Javascript - Up & Going #
+My notes from:
 [You Don't Know JavaScript - Up & Going]
 (https://github.com/getify/You-Dont-Know-JS/tree/master/up%20%26%20going)
+
+Some of my notes are my own summary, others are taken directly / verbatim.
+All rights belong to the original author and contributors at the link above
 
 # Chapter 1: Into Programming #
 ## Statements ##
@@ -356,3 +360,201 @@ global variable (if not in strict mode), or get an error (in strict mode)
 keyword.
   - allows very detailed control of scoping.
   - block scoping keeps variable within block, and not outer scopes
+
+## Conditionals ##
+- `if` statements:
+```javascript
+if (stuff) {
+  // do stuff
+}
+else if (morestuff) {
+  // do more stuff
+}
+else {
+  // do the fallback option
+}
+```
+- `switch` statements:
+```javascript
+switch(stuff) {
+  case 1:
+  case 2:
+    // do something for either 1 or 2 (fall through)
+    break;
+  case 3:
+    // do something else
+    break;
+  case 20:
+    // do something else
+    break;
+  default:
+    // do the fallback option
+}
+```
+- *Ternary* operator / *conditional* operator
+```javascript
+var a = 100;
+var b = (a > 50) ? "foo" : "bar:";
+```
+
+## Strict Mode ##
+- Added in ES5 to keep code within certain guidelines
+- can make code more readily optimized by JS engine
+- Should always use *strict mode*
+- Can be applied for entire file or for individual functions with
+`"use strict";`
+- does not allow auto-global variable declaration when `var` omitted
+
+## Functions as Values ##
+- While functions serve to provide scoping in JavaScript, a function is
+also a variable (value) in the scope it is defined in
+- A function is a value just like a number, array, or other type
+  - Can be a value assigned to a variable
+  - Can be passed to other functions
+  - Can be returned from other functions
+- An anonymous function expression (has no name defined):
+```javascript
+var foo = function() {
+  // do stuff
+};
+```
+- A *named* function expression:
+```javascript
+var x = function bar() {
+  // do more stuff
+};
+```
+- Named function expressions are generally preferred, but there's a lot
+of reasons to use anonymous functions too
+
+## Immediately Invoked Function Expressions (IIFEs) ##
+- The examples in the previous section defined functions but did not
+actually execute them, however it is possible to execute a function
+expression where it is defined (*immediately invoked function expression*):
+```javascript
+(function example(){
+    console.log("Hello World!");
+})();
+// "Hello World!"
+```
+- The parentheses that wrap the function definition prevent it from being
+treated as a normal function declaration
+- The `()` at the end actually execute the function expression immediately
+preceding
+- IIFEs are just functions, and can be used to declare variables that do not
+affect scope outside of the function
+- IIFEs can also return values
+
+## Closure ##
+- *Closure* is a critical concept in JS, a way to remember and provide
+continued access to a function's scope and variables after the function has finished execution
+- Example:
+```javascript
+function makeAdder(x) {
+  // the passed in parameter 'x' is an inner variable
+
+  // the inner function 'add()' uses 'x' so it has a 'closure' over it
+  function add(y) {
+    return y + x;
+  };
+
+  return add;
+}
+
+// `plusOne` gets a reference to the inner `add(..)` function with closure
+// over the `x` parameter of the outer `makeAdder(..)`
+var plusOne = makeAdder( 1 );
+
+// `plusTen` gets a reference to the inner `add(..)` function with closure
+// over the `x` parameter of the outer `makeAdder(..)`
+var plusTen = makeAdder( 10 );
+
+plusOne( 3 );  // 4
+plusOne( 41 ); // 42
+plusTen( 13 ); // 23
+```
+
+## Modules ##
+- Closures most often used in the *module pattern* in JavaScript
+- *Modules* provide a way to hide details of the implementation while
+maintaining a public API that can be accessed from outside users
+- Example:
+```javascript
+// User is the module we are defining
+function User(){
+  // username, password, doLogin details are hidden inside of module
+  var username, password;
+
+  // the details of `doLogin` are internal to the `User()` module.  `doLogin`
+  // has closure over `username` and `password`
+  function doLogin(user, pw){
+    username = user;
+    password = pw;
+
+    //implement rest of login details
+  }
+
+  var publicAPI = {
+    login: doLogin
+  };
+
+  // `publicAPI` is what provides a single `login` capability to the
+  // outside world as `User()` returns only the `publicAPI`
+  return publicAPI;
+}
+
+// create a `User` module instance
+var james = User();
+james.login( "james", "Password!");
+```
+- `doLogin()` has closure over `username` and `password` and can access them
+after the `User()` function has executed
+- `publicAPI` is an object and has a single method `login`, which provides
+a reference to the `doLogin()` inner function of `User()`.  When `publicAPI`
+is returned from `User()` it is assigned to the variable `james`
+- even after `var james = User();` has been executed, `username` and `password`
+are retained because a closure in the function is storing them
+
+## `this` identifier ##
+- While `this` is often used in OOP, in JavaScript it serves a different
+purpose
+- When functions use `this` it usually points to an `object`, but the specific
+`object` varies depending on how the function is called
+- `this` does *not* refer to the function itself
+- Example:
+```javascript
+function foo(){
+  console.log( this.bar );
+}
+
+var bar = "global";
+
+var obj1 = {
+  bar: "obj1",
+  foo: foo
+};
+
+var obj2 = {
+  bar: "obj2"
+};
+
+foo();              // "global"  (rule 1 below)
+obj1.foo();         // "obj1"    (rule 2 below)
+foo.call( obj2 );   // "obj2"    (rule 3 below)
+new foo();          // undefined (rule 4 below)
+```
+Rules for `this` illustrated from above code:
+1. `foo()` sets `this` to the global object in non-strict mode. In strict mode
+`this` would be undefined and the `bar` property would error when accessed
+2. `obj1.foo()` sets `this` to the `obj1` object
+3. `foo.call(obj2)` sets `this` to the `obj2` object
+4. `new foo()` sets `this` to a new empty object (thus returning `undefined`)
+- `this` will always be called in one of these ways, and which way determines
+what `this` points to
+
+## Prototypes ##
+- When you reference an object's property that doesn't exist, JavaScript
+looks to the object's internal *prototype* reference to try to find the
+property on another object (like a fallback if the property is missing)
+- The prototype reference link from an object to its fallback occurs when
+the object is created
