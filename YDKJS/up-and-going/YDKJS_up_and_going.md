@@ -474,7 +474,7 @@ plusOne( 41 ); // 42
 plusTen( 13 ); // 23
 ```
 
-## Modules ##
+### Modules ###
 - Closures most often used in the *module pattern* in JavaScript
 - *Modules* provide a way to hide details of the implementation while
 maintaining a public API that can be accessed from outside users
@@ -558,3 +558,42 @@ looks to the object's internal *prototype* reference to try to find the
 property on another object (like a fallback if the property is missing)
 - The prototype reference link from an object to its fallback occurs when
 the object is created
+- Example:
+```javascript
+var foo = {
+  a: 42
+};
+
+// create `bar` and link it to `foo`
+var bar = Object.create(foo);
+
+bar.b = "hello world";
+
+bar.b;   // "hello world"
+bar.a;   // 42 <- delegated to `foo`
+```
+- in the above example, `a` property doesn't exist on `bar` object but JS
+falls back to looking for `a` on the `foo` object prototype that `bar` is linked
+to
+- The natural way of applying prototypes is "behavior delegation" where linked
+objects are able to *delegate* needed behavior to one another
+- Prototypes should not be used to emulate or fake "classes" or "inheritance"
+
+## Old & New ##
+- Two techniques to use newer JavaScript stuff before older browsers are
+able to handle:
+  1. Polyfilling - taking definition of a newer feature and creating code that
+  is equivalent but able to run in older browsers.  Not all features are
+  able to be polyfilled.  Use ES5-Shim and ES6-Shim rather than creating own
+  polyfill implementations
+  2. Transpiling - *transforming + compiling* to convert newer code (due to
+    syntax) into older equivalents.  Code gets written in new syntax, but
+    deployed to browser in old syntax.  Transpiling usually occurs during
+    build process. Reasons to use:
+      - New syntax is more readable and maintainable
+      - Can transpile for only old browsers and use new syntax for new browsers
+      to gain browser optimizations with new syntax
+      - New syntax can be tested earlier in real world and issues can be fixed
+      by JavaScript committee much earlier
+      - Babel can transpile ES6+ into ES5
+      - Traceur can transpile ES6, ES7 and beyond into ES5
