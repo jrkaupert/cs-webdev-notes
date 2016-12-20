@@ -7,3 +7,17 @@ Some of my notes are my own summary, others are taken directly / verbatim.
 All rights belong to the original author and contributors at the link above
 
 # Chapter 1: What is Scope? #
+
+# Chapter 2: Lexical Scope #
+
+# Chapter 3: Function vs. Block Scope #
+
+# Chapter 4: Hoisting #
+
+# Chapter 5: Scope Closures #
+
+# Dynamic Scope #
+
+# Polyfilling Block Scope #
+
+# Lexical-this #
