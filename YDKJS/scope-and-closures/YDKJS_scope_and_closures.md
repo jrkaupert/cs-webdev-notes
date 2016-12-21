@@ -33,6 +33,25 @@ execution
 variables, and for enforcing how and when the variables may be accessed during
 code execution
 
+Example:
+```javascript
+var a = 2;
+```
+1. The compiler starts by performing lexing to break the statement into tokens
+and parses tokens into a tree
+2. During execution, the compiler sees `var a` and looks at the scope to see if
+`a` already exists in that set of scopes, ignoring it if so, and declaring
+a new variable called `a` in that scope if not
+3. The compiler then creates code for later execution by the engine to handle
+`a = 2`.  The engine will check the scope to see if `a` already exists in the
+current scope collection, and if so, uses `a`.  Otherwise, the engine tries to
+find `a` elsewhere.  If the engine eventually finds `a` it assigns the value `2`
+to it, otherwise it raises an error.
+
+- Basically, the compiler first declares the variable if not already declared
+in current scope, then during execution, the engine looks for the variable in
+the scope and if it finds it, assigns to it
+
 # Chapter 2: Lexical Scope #
 
 # Chapter 3: Function vs. Block Scope #
