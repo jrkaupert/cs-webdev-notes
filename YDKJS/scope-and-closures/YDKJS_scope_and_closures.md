@@ -62,6 +62,7 @@ the scope and if it finds it, assigns to it
   operation (same as the look-up of a value of a variable, or "go get the value
   of ____")
 - Example:
+
 ```javascript
 function foo(a) {
   console.log(a); // 2
@@ -104,6 +105,63 @@ indicates that scope resolution went okay but an invalid action was tried using
 the result
 
 # Chapter 2: Lexical Scope #
+Two primary models for scoping:
+- *Lexical Scope*, used by most programming languages
+- *Dynamic Scope*, used by Bash scripting and some other languages
+
+## Lex-time ##
+Lexical scoping deals with where variables and blocks of scope are defined
+by the developer when code is written.  This scoping usually doesn't change
+once the lexer sees the code
+
+Example:
+```javascript
+function foo(a) {
+  var b = a * 2;
+
+  function bar(c) {
+    console.log( a, b, c );
+  }
+
+  bar(b * 3);
+}
+foo( 2 ); // 2 4 12
+```
+- The above example has 3 nested scopes:
+  1. global scope with the single identifier `foo`
+  2. `foo` scope with 3 identifiers `a`, `bar`, and `b`
+  3. `bar` scope with 1 identifier `c`
+- Scopes are strictly nested (a function can only be defined inside a single
+parent scope)
+
+### Look-ups ###
+- Based on the structure and nesting of each scope, the engine is able to find
+anything it needs to
+- Scope look-up ends as soon as it finds the first identifier it is looking for
+  - *shadowing* occurs when the same identifier is used in multiple nested
+  scopes, where the inner identifier *shadows* the outer
+  - Even if shadowing exists, scope starts at the innermost scope under
+  execution and ends as soon as the first match is found
+- Global variables are also capable of being referenced as a property reference
+of the global object, ie: `window.a`, as global variables are automatically
+made properties of the global object.  This allows global variables to be
+accessed if they would otherwise be inaccessible due to shadowing
+- Regardless of where a function is called from or how it is called, lexical
+scope is defined solely by where the function is declared
+- lexical scope lookup only occurs for *first-class* identifiers, finding only
+the first variable, with object property-access finding any further properties,
+ie: `foo.bar.baz` only finds `foo` via lexical scoping, and `bar` and `baz` via
+object property-access
+
+## Cheating Lexical ##
+
+### eval ###
+
+### with ###
+
+### Performance ###
+
+
 
 # Chapter 3: Function vs. Block Scope #
 
