@@ -55,7 +55,9 @@ the scope and if it finds it, assigns to it
 ## Compiler Speak ##
 - Two types of *look-up* done by the engine:
   - *LHS* look-up = when variable appears on left-hand side of an assignment
-  operation (finding the variable container itself so assignment can be done)
+  operation (finding the variable container itself so assignment can be done).
+  Can occur with `=` sign or by passing arguments into a function (implicit
+  assignment)
   - *RHS* look-up = when variable appears on right-hand side of an assignment
   operation (same as the look-up of a value of a variable, or "go get the value
   of ____")
@@ -82,7 +84,24 @@ code-generation, the engine doesn't have to do anything during execution to
 assign the function value to `foo`
 
 ## Nested Scope ##
+- When there's more than one scope, the engine will look in the next outer
+containing scope, repeating the process until the variable is found or until
+the *global* scope has been reached and the variable is not found
 
+## Errors ##
+- When RHS look-up occurs and cannot find a variable in any of the nested scopes
+a `ReferenceError` will be thrown by the engine.  The error is of type
+`ReferenceError`
+- When LHS look-up occurs and cannot find a variable in any of the nested
+scopes, if not in *strict mode*, the global scope will create a new variable
+with that name in the global scope for the engine.  In *strict mode*, the engine
+with throw a `ReferenceError`
+- If a RHS look-up results in a variable but an action is performed that is
+impossible with that value (ie: referencing a property on a `null` or
+`undefined` value), a `TypeError` is thrown
+- `ReferenceError` is related to a scope-resolution failure, `TypeError`
+indicates that scope resolution went okay but an invalid action was tried using
+the result
 
 # Chapter 2: Lexical Scope #
 
