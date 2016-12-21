@@ -52,6 +52,38 @@ to it, otherwise it raises an error.
 in current scope, then during execution, the engine looks for the variable in
 the scope and if it finds it, assigns to it
 
+## Compiler Speak ##
+- Two types of *look-up* done by the engine:
+  - *LHS* look-up = when variable appears on left-hand side of an assignment
+  operation (finding the variable container itself so assignment can be done)
+  - *RHS* look-up = when variable appears on right-hand side of an assignment
+  operation (same as the look-up of a value of a variable, or "go get the value
+  of ____")
+- Example:
+```javascript
+function foo(a) {
+  console.log(a); // 2
+}
+
+foo(2);
+```
+
+- The code `foo(2);` actually invokes both a LHS and a RHS look-up, where the
+RHS lookup is done to find the reference to `foo`, and the LHS look-up is done
+to implicitly assign the argument `2` to the input parameter of `foo`.
+- Inside the function, there's a RHS look-up for `a`, as well as on the `console`
+object, and property-resolution to find the `log` method.
+- Lastly, there's a LHS/RHS pair as `2` is passed (found from RHS look-up) into
+`log`, where a LHS look-up is used as `2` is assigned to the assumed `arg1`
+parameter of the `log` method
+- **Note**: function declaration is done a little differently (it's not a LHS
+look-up).  Since the Compiler handles declaration and value definition during
+code-generation, the engine doesn't have to do anything during execution to
+assign the function value to `foo`
+
+## Nested Scope ##
+
+
 # Chapter 2: Lexical Scope #
 
 # Chapter 3: Function vs. Block Scope #
