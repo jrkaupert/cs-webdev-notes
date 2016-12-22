@@ -354,9 +354,62 @@ In the above example, `def` is defined in the second-half, and passed into
 the `IIFE` function defined before it, where `def` is then invoked with
 `window` passed in as the `global` parameter of `def`
 
-
-
 ## Blocks as Scopes ##
+- Functions are the most common unit of scope, but there are other ways to
+scope in JavaScript
+- In block scoping, variables are declared as close to their usage as possible
+- JavaScript doesn't directly block scope like in other languages, however
+such as when used in `for` or `if` blocks
+
+### `with` ###
+- `with` is a form of block scoping, but don't use it!
+
+### `try/catch` ###
+- in ES3 specification and beyond , variable declaration in `catch` clauses
+of a `try/catch` statement are block-scoped to `catch` block
+
+### `let` ###
+- in ES6 and beyond, the new `let` keyword attaches a variable definition to
+the scope of the block it occurs in
+
+Example:
+```js
+var foo = true;
+
+if (foo) {
+  let bar = foo * 2;
+  bar = something( bar );
+  console.log( bar );
+}
+console.log ( bar ); //ReferenceError
+```
+
+- In order to explicitly show block-scoping with `let`, can also use the following form with an arbitrary block of `{..}` braces
+- Code below is equivalent to the above
+
+```js
+var foo = true;
+
+if (foo) {
+  { // <-- explicit block
+    let bar = foo * 2;
+    bar = something( bar );
+    console.log( bar );
+  }
+}
+console.log( bar ); // ReferenceError
+```
+
+- Declarations using `let` do not hoist to the entire scope of the block
+they appear in:
+
+```js
+{
+  console.log( bar ); // ReferenceError!
+  let bar = 2;
+}
+
+```
 
 ### Garbage Collection ###
 
