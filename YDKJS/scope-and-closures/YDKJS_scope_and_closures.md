@@ -710,8 +710,108 @@ In this case, the inner function `baz` is passed to `bar`, where its inner
 function `fn` is called which accesses `a`.
 
 ## Now I can See ##
+A real-world example:
+
+```js
+function wait(message) {
+  setTimeout( function timer(){
+    console.log( message );
+  }, 1000);
+}
+
+wait( "Hello, closure!" );
+```
+
+In the above example, an inner function `timer` is passed to
+ `setTimeout(..)`.  Because `timer` has a scope closure over the `wait(..)`
+scope, the reference to the variable `message` is maintained.
+
+After 1000 ms have passed from executing `wait(..)`, `timer` still has closure
+over that scope, long after that inner scope should have been gone.
+
+The built-in `setTimeout(..)` has reference to some parameter, and when the
+engine invokes the function, the inner `timer` is invoked and its lexical
+scope reference still remains via closure.
+
+A jQuery example:
+```js
+function setupBot(name, selector) {
+  $( selector ).click( function activator(){
+    console.log( "Activating: " + name );
+  });
+}
+
+setupBot("Closure Bot 1", "#bot_1");
+setupBot("Closure Bot 2", "#bot_2");
+```
+
+Whenever and wherever you pass functions as first-class values, you are likely
+to be using closure.  This occurs when timers, event handlers, Ajax requests,
+cross-window messaging, web workers, and any other async or sync tasks that
+require callback functions are used.
+
+IIFEs don't really use closure because they are invoked in the same scope they
+are declared.  Closure occurs, but it's not observable.
 
 ## Loops + Closure ##
+An example of closure using the `for` loop:
+
+```js
+for (var i=1; i<=5; i++) {
+  setTimeout( function timer(){
+    console.log( i );
+  }, i*1000);
+}
+```
+
+The expectation is that this code would print the numbers 1 through 5, one
+per second, but *it doesn't*.  The `i` variable is shared over the same global
+scope of the functions with closure.
+
+Next example:
+
+```js
+for (var i=1; i<=5; i++) {
+  (function() {
+    setTimeout( function timer(){
+      console.log( i );
+    }, i*1000 );
+  })();
+}
+```
+
+Unfortunately, this second example is no better.  Even though another lexical
+scope is created, it doesn't do anything.  It needs its own copy of the `i`
+value.
+
+Final example:
+```js
+for (var i=1; i<=5; i++) {
+  (function(){
+    var j = i;
+    setTimeout( function timer(){
+      console.log( j );
+    }, j*1000 );
+  })();
+}
+```
+
+This version works with `j=i` making a copy of the loop variable each time
+through
+
+An alternate version of the working final example:
+```js
+for (var i=1; i<=5; i++) {
+  (function(j){
+    setTimeout( function timer(){
+      console.log( j );
+    }, j*1000);
+  })( i );
+}
+```
+
+Using an IIFE created a new scope for each iteration which allowed the timeout
+function callbacks to closer over a new scope for each iteration.
 
 ### Block Scoping Revisited ###
 
