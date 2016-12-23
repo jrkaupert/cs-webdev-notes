@@ -483,6 +483,15 @@ console.log( b ); // ReferenceError!
 
 # Chapter 4: Hoisting #
 
+## Some Notes on Ordering of Declaration & Assignment ##
+
+## More About the Compiler ##
+
+## Functions First ##
+
+
+
+
 # Chapter 5: Scope Closures #
 
 # Dynamic Scope #
