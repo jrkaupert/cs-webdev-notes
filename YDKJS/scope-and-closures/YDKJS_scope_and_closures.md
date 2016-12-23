@@ -646,8 +646,36 @@ else {
 # Chapter 5: Scope Closures #
 
 ## Enlightenment ##
+Closure is all around in JavaScript, you just have to recognize and embrace it.
+It results from writing code that uses lexical scope.  You just need the
+proper mental context to recognize where to use them.
+
+The moment of enlightenment should occur when you realize that **closures are
+already all over the place in my code, I can now just *see* them**
 
 ## Nitty Gritty of Closures ##
+**Closure** is when a function retains knowledge and access to its lexical
+scope even after when function is executing outside its lexical scope
+
+Example:
+```js
+function foo() {
+  var a = 2;
+
+  function bar() {
+    console.log( a );
+  }
+
+  return bar;
+}
+
+var baz = foo();
+
+baz(); // 2 - via closure!
+```
+
+In the above example, `bar()` has lexical scope access to the scope of `foo()`.
+
 
 ## Now I can See ##
 
