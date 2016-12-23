@@ -591,9 +591,57 @@ foo = function() {
 ```
 
 ## Functions First ##
+While both function declarations and variable declarations are hoisted by
+the compiler, it is important to note that functions are hoisted *first*,
+followed by variables
 
+```js
+foo(); // 1
 
+var foo;
 
+function foo() {
+  console.log( 1 );
+}
+
+foo = function() {
+  console.log( 2 );
+}
+```
+
+In the above code, `1` is printed instead of `2`.  The code is actually
+interpreted as:
+
+```js
+function foo() {
+  console.log( 1 );
+}
+foo(); // 1
+
+foo = function() {
+  console.log( 2 );
+};
+```
+
+While `function` declarations do override `var` declarations, duplicate
+`function` declarations will override previous ones.  Duplicate definitions
+in the same scope are a **bad** idea...
+
+Function declarations when contained inside of normal blocks will hoist to
+the enclosing scope rather than being conditional, but the behavior is not
+reliable and should be avoided:
+
+```js
+foo(); // "b"
+
+var a = true;
+if (a) {
+  function foo() {console.log( "a" ); }
+}
+else {
+  function foo() {console.log( "b" ); }
+}
+```
 
 # Chapter 5: Scope Closures #
 
