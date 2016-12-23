@@ -412,7 +412,74 @@ they appear in:
 ```
 
 ### Garbage Collection ###
+Block scoping is also helpful in garbage collection for reclaiming memory:
+```js
+function process(data){
+  // do something interesting  
+}
 
+var someReallyBigData = { .. };
+
+process( someReallyBigData );
+
+var btn = document.getElementById("my_button");
+
+btn.addEventListener("click", function click(evt){
+  console.log("button clicked");
+}, /*capturingPhase=*/false);
+```
+
+In the above example, the `click` function handler callback does not use or
+need the `someReallyBigData` variable, but most likely the JS engine will
+not garbage collect it because `click` has a closer over the whole scope
+
+```js
+function process(data) {
+  // do something interesting
+}
+
+// anything declared inside the block can go away after
+{
+  let someReallyBigData = {..};
+  process( someReallyBigData );
+}
+
+var btn = document.getElementById("my_button");
+
+btn.addEventListener("click", function click(evt){
+  console.log("button clicked");
+}, /*capturingPhase=*/false);
+```
+
+In the code above, everything in the new block is obviously no longer needed
+by the `click` scope
+
+### `let` loops ###
+`let` is useful in handling loop variables:
+```js
+for (let i=0; i<10; i++) {
+  console.log(i);
+}
+console.log(i); //ReferenceError
+```
+
+### `const` ###
+ES6 also introduced `const`, which creates block-scoped constants, where
+changes to that value at a later time produces an error
+```js
+var foo = true;
+
+if (foo) {
+  var a = 2;
+  const b = 3; // block-scoped to containing `if`
+
+  a = 3; // just fine!
+  b = 4; // error!
+}
+
+console.log( a ); // 3
+console.log( b ); // ReferenceError!
+```
 
 # Chapter 4: Hoisting #
 
