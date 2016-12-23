@@ -645,6 +645,25 @@ else {
 
 # Chapter 5: Scope Closures #
 
+## Enlightenment ##
+
+## Nitty Gritty of Closures ##
+
+## Now I can See ##
+
+## Loops + Closure ##
+
+### Block Scoping Revisited ###
+
+## Modules ##
+
+## Modern Modules ##
+
+## Future Modules ##
+
+
+
+
 # Dynamic Scope #
 
 # Polyfilling Block Scope #
