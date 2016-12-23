@@ -675,7 +675,39 @@ baz(); // 2 - via closure!
 ```
 
 In the above example, `bar()` has lexical scope access to the scope of `foo()`.
+Then, `bar()` is passed as a value through the `return` statement.
 
+Once `foo()` is executed, the value gets assigned to `baz`.  Once `baz()` is
+executed, `bar()` is invoked again, but outside of its declared lexical scope.
+
+After `foo()` is executed, the expectation would be that the entire inner scope
+of `foo()` would go away via garbage collection to free up memory.  Instead,
+closure does not let this happen because the inner scope is still in use
+by `bar()`.  
+
+`bar()` has a lexical scope closure over that inner scope of `foo()`.  That
+scope is kept alive for reference at any later time. That reference is called
+**closure**
+
+Another example:
+```js
+function foo() {
+  var a = 2;
+
+  function baz() {
+    console.log( a ); // 2
+  }
+
+  bar( baz );
+}
+
+function bar(fn) {
+  fn(); // Another closure
+}
+```
+
+In this case, the inner function `baz` is passed to `bar`, where its inner
+function `fn` is called which accesses `a`.
 
 ## Now I can See ##
 
