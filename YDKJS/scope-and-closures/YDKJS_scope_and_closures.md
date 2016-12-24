@@ -814,8 +814,154 @@ Using an IIFE created a new scope for each iteration which allowed the timeout
 function callbacks to closer over a new scope for each iteration.
 
 ### Block Scoping Revisited ###
+In the previous example, an IIFE was used to create a new scope on each
+iteration, because we needed a per-iteration *block scope*.
+
+The `let` keyword allows us to also declare a variable in a block directly,
+turning a block into a scope we can close over:
+
+```js
+for (var i=1; i<=5; i++) {
+  let j = i;
+  setTimeout( function timer(){
+    console.log( j );
+  }, j*1000 );
+}
+```
+
+Another, even cleaner way:
+
+```js
+for (let i=1; i<=5; i++) {
+  setTimeout( function timer() {
+    console.log( i );
+  }, i*1000);
+}
+```
 
 ## Modules ##
+Another pattern using closure that does not appear to rely on callbacks:
+
+```js
+function CoolModule() {
+  var something = "cool";
+  var another = [1, 2, 3];
+
+  function doSomething(){
+    console.log( something );
+  }
+
+  function doAnother(){
+    console.log( another.join( " ! ") );
+  }
+
+  return {
+    doSomething: doSomething,
+    doAnother: doAnother
+  };
+}
+
+var foo = CoolModule();
+
+foo.doSomething(); // cool
+foo.doAnother(); // 1 ! 2 ! 3
+```
+
+This is called the *module* pattern, and this version is the *Revealing Module*
+implementation
+
+Some things to note:
+- `CoolModule()` is a function, but it has to be invoked to create an instance
+of the module and therefore the inner scopes and closures
+- The function returns an object ({key: value pairs}) with references to
+the inner functions but not the inner data variables (which remain hidden
+  and private)
+- The return value is essentially a **public API** for the module
+- The return value is assigned to the outer variable `foo` which can then
+be used to access property methods on the API like `foo.doSomething()`
+
+Two requirements for module pattern:
+1. Must be an outer enclosing function that is invoked at least once, where
+each invocation creates a new module instance
+2. The enclosing function must return back at least a single inner function
+so that the inner function has closure over the private scope and can access
+or change that private state
+
+A "singleton" variation (only want a single instance), using an IIFE:
+
+```js
+var foo = (function CoolModule(){
+  var something = "cool";
+  var another = [1, 2, 3];
+
+  function doSomething() {
+    console.log( something );
+  }
+
+  function doAnother() {
+    console.log( another.join( " ! ") );
+  }
+
+  return {
+    doSomething: doSomething,
+    doAnother: doAnother
+  };
+})();
+
+foo.doSomething(); // cool
+foo.doAnother(); // 1 ! 2 ! 3
+```
+
+Modules can also receive parameters just like all other functions:
+
+```js
+function CoolModule(id) {
+  function identify() {
+    console.log(id);
+  }
+
+  return {
+    identify: identify
+  };
+}
+
+var foo1 = CoolModule( "foo 1" );
+var foo2 = CoolModule( "foo 2" );
+```
+
+Alternate variation is to name object you are returning as your public API:
+
+```js
+var foo = (function CoolModule(id) {
+  function change() {
+    // modifying the public API
+    publicAPI.identify = identify2;
+  }
+
+  function identify1() {
+    console.log( id );
+  }
+
+  function identify2() {
+    console.log( id.toUpperCase() );
+  }
+
+  var publicAPI = {
+    change: change,
+    identify: identify2
+  };
+
+  return publicAPI;
+})( "foo module" );
+
+foo.identify(); // foo module
+foo.change();
+foo.identify(); // FOO MODULE
+```
+
+By retaining an inner reference to the public API object inside the module
+instance, that module instance can be changed from the inside via adding /
+removing methods & properties and changing their values
 
 ## Modern Modules ##
 
