@@ -1032,9 +1032,59 @@ Both the `foo` and `bar` modules are defined with a function returning a
 public API.  `foo` also uses `bar` as a dependency
 
 ## Future Modules ##
+- ES6 adds new syntax support for modules.  When ES6 loads modules, it treats
+each file as a separate module which can import other modules or specific API
+pieces, and export its own API pieces
+- ES6 module APIs are static (can't be changed at run-time), unlike
+function-based modules (which can be changed at run-time).  Because of this,
+the compiler can check ES6 Modules to see if an API reference does not
+exist and throw an early error at compile-time rather than execution
+- ES6 modules must be defined one file per module.
 
+Example:
+**bar.js**
 
+```js
+function hello(who) {
+  return "Let me introduce: " + who;
+}
 
+export hello;
+```
+
+**foo.js**
+
+```js
+import hello from "bar";
+
+var hungry = "hippo";
+
+function awesome() {
+  console.log(
+    hello( hungry ).toUpperCase()
+  );
+}
+
+export awesome;
+```
+
+```js
+module foo from "foo";
+module bar from "bar";
+
+console.log(
+  bar.hello( "rhino" )
+); // Let me introduce: rhino
+
+foo.awesome(); // LET ME INTRODUCE: HIPPO
+```
+
+- `import` imports one or more members from an API into the current scope,
+each bound to a variable.
+- `module` imports entire module API to bound variable
+- `export` exports a function or variable to the public API for the current
+module
+- module file contents are treated as if in an enclosed scope
 
 # Dynamic Scope #
 
