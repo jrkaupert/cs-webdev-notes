@@ -101,3 +101,35 @@ All rights belong to the original author and contributors at the link above
 #### Enumeration ####
 
 ## Iteration ##
+
+# Chapter 4: Mixing (Up) "Class" Objects #
+
+## Class Theory ##
+
+### "Class" Design Pattern ###
+
+### JavaScript "Classes" ###
+
+## Class Mechanics ##
+
+### Building ###
+
+### Constructor ###
+
+## Class Inheritance ##
+
+### Polymorphism ###
+
+### Multiple Inheritance ###
+
+## Mixins ##
+
+### Explicit Mixins ###
+
+#### "Polymorphism" Revisited ####
+
+#### Mixing Copies ####
+
+#### Parasitic Inheritance ####
+
+### Implicit Mixins ###
