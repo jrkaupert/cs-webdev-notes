@@ -165,3 +165,43 @@ All rights belong to the original author and contributors at the link above
 #### `Object.create()` Polyfilled ####
 
 ### Links as Fallbacks? ###
+
+# Chapter 6: Behavior Delegation #
+
+## Towards Delegation-Oriented Design ##
+
+### Class Theory ###
+
+### Delegation Theory ###
+
+#### Mutual Delegation (Disallowed) ####
+
+#### Debugged ####
+
+### Mental Models Compared ###
+
+## Classes vs. Objects ##
+
+### Widget "Classes" ###
+
+#### ES6 `class` sugar ####
+
+### Delegating Widget Objects ###
+
+## Simpler Design ##
+
+### De-class-ified ###
+
+## Nicer Syntax ##
+
+### Unlexical ###
+
+## Introspection ##
+
+# Appendix A: ES6 `class` #
+
+## `class` ##
+
+## `class` Gotchas ##
+
+## Static > Dynamic? ##
