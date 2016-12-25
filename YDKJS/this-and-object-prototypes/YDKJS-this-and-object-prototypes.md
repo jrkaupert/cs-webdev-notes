@@ -5,3 +5,51 @@ My notes from:
 
 Some of my notes are my own summary, others are taken directly / verbatim.
 All rights belong to the original author and contributors at the link above
+
+# Chapter 1: `this` or That? #
+
+## Why `this`? ##
+
+## Confusions ##
+
+### Itself ###
+
+## Its Scope ##
+
+## What's `this`? ##
+
+# Chapter 2: `this` All Makes Sense Now! #
+
+## Call-site ##
+
+## Nothing But Rules ##
+
+### Default Binding ###
+
+### Implicit Binding ###
+
+#### Implicitly Lost ####
+
+### Explicit Binding ###
+
+#### Hard Binding ####
+
+#### API Call "Contexts" ####
+
+### `new` Binding ###
+
+## Everything in Order ##
+
+### Determining `this` ###
+
+## Binding Exceptions ##
+
+### Ignored `this` ###
+
+#### Safer `this` ####
+
+### Indirection ###
+
+### Softening Binding ###
+
+## Lexical `this` ##
