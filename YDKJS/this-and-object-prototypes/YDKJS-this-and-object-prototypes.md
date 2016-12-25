@@ -133,3 +133,35 @@ All rights belong to the original author and contributors at the link above
 #### Parasitic Inheritance ####
 
 ### Implicit Mixins ###
+
+# Chapter 5: Prototypes #
+
+## [[Prototype]] ##
+
+### `Object.prototype` ###
+
+### Setting & Shadowing Properties ###
+
+## "Class" ##
+
+### "Class" Functions ###
+
+### "Constructors" ###
+
+#### Constructor Or Call? ####
+
+### Mechanics ###
+
+#### "Constructor" Redux ####
+
+## "(Prototypal) Inheritance" ##
+
+### Inspecting "Class" Relationships ###
+
+## Object Links ##
+
+### `Create()`ing Links ###
+
+#### `Object.create()` Polyfilled ####
+
+### Links as Fallbacks? ###
