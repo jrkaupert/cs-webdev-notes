@@ -184,8 +184,68 @@ the call-stack, then find the second item from the top, and that will show the
 *real* call-site.
 
 ## Nothing But Rules ##
+There are 4 different rules that determine where `this` will
+point during function execution.  There is also an order of
+precedence that must be understood if multiple rules could
+apply to the call-site:
+
+1. Called with `new`? Use the newly constructed object.
+2. Called with `call` or `apply` or `bind`? Use the specified
+object.
+3. Called with a context object owning the call? Use that
+context object
+4. Default: `undefined` in `strict mode`, global object
+otherwise
 
 ### Default Binding ###
+The first rule that will be examined (ignore the order from
+the previous section for now) looks at the most common case
+of a standalone function invocation.  This is the catch-all rule
+when none of the other rules apply.
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var a = 2;
+
+foo(); // 2
+```
+
+When `foo()` is called, `this.a` resolves to the global variable
+`a` because in this case, the default binding for `this` applies
+to the function call which points `this` at the global object
+that contains `a` as a property (global object properties are
+one and the same with global variables).
+
+Because `foo()` is called without any other pieces, none of the
+other binding rules apply and the default is used.
+
+When `strict mode` is used, the global object is ineligible for
+the default binding behavior so `this` is set to `undefined`:
+
+```js
+function foo() {
+  "use strict"
+
+  console.log( this.a );
+}
+
+var a = 2;
+
+foo(); // TypeError: `this` is `undefined`
+```
+
+Note that while `this` binding rules are entirely based on
+call-site, the global object is only eligible for default
+binding if the **contents** of a function are not running
+in strict mode.  The strict mode state of the call-site is
+irrelevant.
+
+Usually programs should be entirely strict mode or not, but
+this can become a relevant issue if third-party libraries are
+used with different settings than the code they are called from.
 
 ### Implicit Binding ###
 
