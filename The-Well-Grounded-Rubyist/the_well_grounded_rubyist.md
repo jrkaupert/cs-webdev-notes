@@ -134,14 +134,61 @@ Read files: `filename = File.read("filename.txt")`
 Write files: `filehandle = File.new("fileout.txt", "w")`
 Make sure to close the file with `filehandle.close` afterward!
 
-
-
-
 ## 1.2 Anatomy of the Ruby Installation ##
+`irb --simple-prompt -rrbconfig` can be used to put `irb` into mode where
+you can find config info about system Ruby installation:
+`>> RbConfig::CONFIG["bindir"]`
+
+Key Ruby directories and their corresponding RbConfig terms:
+- rubylibdir = Ruby standard library
+- bindir = Ruby command-line tools
+- archdir = Architecture-specific extensions / libraries (compiled binaries)
+- sitedir = your own or third-party extensions & libraries (written in Ruby)
+- vendordir = Third-party extensions & libraries (written in Ruby)
+- sitelibdir = Your own Ruby language extensions (written in Ruby)
+- sitearchdir = Your own Ruby language extensions (written in C)
+
+### 1.2.1 The Ruby standard library subdirectory (RbConfig::CONFIG[rubylibdir]) ###
+rubylibdir has standard library functions which can be used via `require`,
+written in Ruby
+
+### 1.2.2 The C extensions directory (RbConfig::CONFIG[archdir]) ###
+Architecture-specific extensions and libraries (.so, .dll, .bundle files)
+
+Standard library components written in C, but usable just the same as Ruby
+extensions
+
+### 1.2.3 The site_ruby (RbConfig::CONFIG[sitedir]) and vendor_ruby (RbConfig::CONFIG[vendordir]) directories ###
+site_ruby = Place to store tools / libraries / extensions written by 3rd parties or yourself
+
+vendor_ruby = Place where some 3rd party tools will install themselves
+
+### 1.2.4 The gems directory ###
+RubyGems utility is standard way to package and distribute Ruby libraries
+
+Unbundled library files end up in gems directory when a gem is installed
 
 ## 1.3 Ruby extensions and programming libraries ##
 
+### 1.3.1 Loading external files and extensions ###
+
+### 1.3.2 "Load"-ing a file in the default load path ###
+
+### 1.3.3 "Require"-ing a feature ###
+
+### 1.3.4 require_relative ###
+
 ## 1.4 Out-of-the-box Ruby tools and applications ##
+
+### 1.4.1 Interpreter command-line switches ###
+
+### 1.4.2 A closer look at interactive Ruby interpretation with irb ###
+
+### 1.4.3 ri and RDoc ###
+
+### 1.4.4 The rake task-management utility ###
+
+### 1.4.5 Installing packages with the gem command ###
 
 # Chapter 2: Objects, methods, and local variables #
 
