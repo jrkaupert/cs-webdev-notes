@@ -298,14 +298,40 @@ the objects are being asked to execute.  Objects are usually represented
 by variables.
 
 ## 2.1 Talking to objects ##
+Writing Ruby programs is largely about creating objects that play distinct
+roles and perform actions related to that role
 
 ### 2.1.1 Ruby and object orientation ###
+Every object is an instance of a class, and behavior of objects is
+determined by method of the object's class
 
 ### 2.1.2 Creating a generic object ###
+In Ruby, the class concept fits on top of objects and not the other way
+around.  Objects in Ruby can "learn" methods that weren't given by its
+class
+
+A generic new object can be created using `obj = Object.new`
+
+To ask an object to do something, we send messages, and if the object
+has the appropriate method corresponding to the message, it responds
+by performing that behavior.  If a method with that name is not found,
+error-handling occurs
 
 ### 2.1.3 Methods that take arguments ###
+Variables listed in a method's definition are its *formal parameters*
+
+Values supplied to the method when calling the method are known as
+*arguments*
 
 ### 2.1.4 The return value of a method ###
+Ruby is made up of expressions that evaluate to particular values.
+Method calls are also expressions and evaluate to values as well (the
+method's *return value*)
+
+The return value for a method is the same as the last expression evaluated
+in that method.  The `return` keyword makes return values explicit, but
+is usually optional.  The `return` keyword must be used to return Multiple
+values or return in the middle of a method.
 
 ## 2.2 Crafting an object: The behavior of a ticket ##
 
