@@ -7,8 +7,91 @@ Some of my notes are my own summary, others are taken directly / verbatim.
 All rights belong to the original author
 
 # Chapter 1: Bootstrapping your Ruby literacy #
+- Ruby is an object-oriented language
+- objects are created by classes
+- Modules let you fine-tune classes and objects (reuse of and splitting
+  of code into units)
+  Default object = `self`
 
 ## 1.1 Basic Ruby language literacy ##
+- "Ruby" = the language
+- `ruby` = the interpreter (CLI tool)
+
+The `irb` command lets you use the interactive Ruby shell at a command
+line.  Can use for basic calculations or execute any Ruby code in
+real-time.  
+
+`irb --simple-prompt` keeps the screen a bit clearer (no line numbers)
+
+`quit()` to exit `irb`
+
+### 1.1.1 A Ruby syntax survival kit ###
+- Can do arithmetic, assignment, comparison of values, conversion of one
+type to another:
+
+```ruby
+# Arithmetic
+2 + 3 # 5
+2 - 3 # -1
+2 * 3 # 6
+2 / 3 # 0
+2 / 3.0 # 0.6666666...
+10.3 + 20.25 # 30.55
+103 - 202.5 # -99.5
+32.9 * 10 # 329.0
+100.0 / 0.23 # 434.78260869...
+
+# Assignment
+x = 1
+string = "Hello"
+
+# Comparison of values
+x == y
+
+# Convert a numeric string to a number
+x = "100".to_i
+s = "100"
+x = s.to_i
+```
+
+Basic input/output methods and flow control:
+```ruby
+print "Hello" # prints "Hello" and nothing else
+puts "Hello" # adds newline to end of string
+p "Hello" # outputs inspect string which may have additional info
+
+s = gets # assigns user input to a variable
+
+# conditional execution (statements must always finish with `end`)
+if x == y
+  puts "Yes!"
+else
+  puts "No!"
+end
+```
+
+Special objects:
+```ruby
+true   # `true` and `false` often used as return values for conditionals
+false
+nil    # `nil` indicates absence of a value or result
+       # `false` and `nil` cause conditional expression to fail, all
+       # other objects are considered true
+
+self  #refers to default object. Methods than don't specify calling
+      # object are called on `self`
+```
+
+### 1.1.2 The variety of Ruby identifiers ###
+Types of Ruby identifiers:
+- Variables
+  - Local
+  - Instance
+  - Class
+  - Global
+- Constants
+- Keywords
+- Method names
 
 ## 1.2 Anatomy of the Ruby Installation ##
 
