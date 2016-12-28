@@ -85,13 +85,57 @@ self  #refers to default object. Methods than don't specify calling
 ### 1.1.2 The variety of Ruby identifiers ###
 Types of Ruby identifiers:
 - Variables
-  - Local
-  - Instance
-  - Class
-  - Global
-- Constants
-- Keywords
-- Method names
+  - Local - start with lowercase letter or underscore
+  - Instance - always start with "@".  Store info for individual objects
+  - Class - store info for classes.  Start with "@@"
+  - Global - start with "$"
+- Constants - begin with uppercase letter.  Either camel case or
+underscore separated all-uppercase
+- Keywords - various predefined reserved terms for the language
+- Method names - Same convention as local variables, but may also
+end with ?, !, or = as well
+
+### 1.1.3 Method calls, messages, and Ruby objects ###
+All data structures and values in Ruby are objects.  All objects can
+understand sets of messages, corresponding to methods
+
+Methods are named, executable routines the object has the ability to
+trigger and can take arguments (which are also objects)
+
+Message sending occurs via "." operator (among other ways).  In general
+when you see a dot, the message on the right is being sent to an object
+on the left.
+
+Most time will be spent either defining things objects should be able
+to do (via methods), or asking objects to do those things (by sending
+them messages)
+
+Classes define clusters of behavior/functionality.  Every object is
+an instance of exactly one class.  They are responsible for bringing
+objects into existence (instantiation).  Objects can adopt behaviors
+beyond their class-given ones, however, and this is a core part of
+the Ruby language.
+
+### 1.1.4 Writing and saving a simple program ###
+Simple programs can be written as text files with the ".rb" extension
+
+### 1.1.5 Feeding the program to Ruby ###
+Running Ruby programs involves passing source files to the `ruby`
+interpreter.
+
+`ruby -cw <filename>` can be used to check for syntax errors without
+actually running the program.
+
+### 1.1.6 Keyboard and file I/O ###
+There's no need to include `\n` like in other languages because most of
+the time `puts` will add the newline for you
+
+Read files: `filename = File.read("filename.txt")`
+Write files: `filehandle = File.new("fileout.txt", "w")`
+Make sure to close the file with `filehandle.close` afterward!
+
+
+
 
 ## 1.2 Anatomy of the Ruby Installation ##
 
