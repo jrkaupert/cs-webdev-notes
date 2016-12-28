@@ -293,16 +293,57 @@ Gems can have multiple versions installed on the same system and can
 be selected by version number `gem "cucumber", "2.0.1"`
 
 # Chapter 2: Objects, methods, and local variables #
+Objects receive messages which usually correspond to names of methods
+the objects are being asked to execute.  Objects are usually represented
+by variables.
 
 ## 2.1 Talking to objects ##
 
+### 2.1.1 Ruby and object orientation ###
+
+### 2.1.2 Creating a generic object ###
+
+### 2.1.3 Methods that take arguments ###
+
+### 2.1.4 The return value of a method ###
+
 ## 2.2 Crafting an object: The behavior of a ticket ##
+
+### 2.2.1 The ticket object, behavior first ###
+
+### 2.2.2 Querying the ticket object ###
+
+### 2.2.3 Shortening the ticket code via string interpolation ###
+
+### 2.2.4 Ticket availability: Expressing Boolean state in a method ###
 
 ## 2.3 The innate behaviors of an object ##
 
+### 2.3.1 Identifying objects uniquely with the object_id method ###
+
+### 2.3.2  Querying an object's abilities with the respond_to? method ###
+
+### 2.3.3 Sending messages to objects with the send method ###
+
 ## 2.4 A close look at method arguments ##
 
+### 2.4.1 Required and optional arguments ###
+
+### 2.4.2 Default values for arguments ###
+
+### 2.4.3 Order of parameters and arguments ###
+
+### 2.4.4 What you can't do in argument lists ###
+
 ## 2.5 Local variables and variable assignment ##
+
+### 2.5.1 Variables, objects, and references ###
+
+### 2.5.2 References in variable assignment and reassignment ###
+
+### 2.5.3 References and method arguments ###
+
+### 2.5.4 Local variables and the things that look like them ###
 
 # Chapter 3: Organizing objects with classes #
 
