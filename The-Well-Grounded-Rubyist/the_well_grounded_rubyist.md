@@ -169,14 +169,63 @@ RubyGems utility is standard way to package and distribute Ruby libraries
 Unbundled library files end up in gems directory when a gem is installed
 
 ## 1.3 Ruby extensions and programming libraries ##
+Extensions that ship with Ruby are collectively known as the *standard-library*, which contains ways to handle many common tasks
+
+Extensions can be loaded using `require` and `load` methods to be
+included at runtime in programs
 
 ### 1.3.1 Loading external files and extensions ###
+Things loaded at runtime go by several names:
+- Feature = most abstract, included by `require`
+- Library = more concrete and common, and implies can be loaded
+- Extension = any loadable add-on library, but usually meaning something
+for Ruby written in C rather than Ruby
+
+Files can be loaded at runtime using `load` from the current working
+directory or the *load path*:
+`load "file.rb"`
 
 ### 1.3.2 "Load"-ing a file in the default load path ###
+The *load path* of the Ruby interpreter is a set of directories that
+`ruby` searches for files you ask it to load.  These directories can be
+listed by examining the contents of the special global variable `$:` as shown below:
+`ruby -e 'puts $:'`, where the `-e` flag runs command line arguments as
+a script
+
+The current working directory (represented by a single dot) is not
+actually included in the load path, even though `load` handles it
+
+Relative directories can be included in `load` by using the `../` syntax.
+Changing the current directory during a program will affect relative
+directory references.  `load` can also find files using an absolute path
+
+`load` is handled during program execution.  `load` is not found up front, so `load` directives can load files containing dynamically set
+names, and `load` can be wrapped in conditional blocks that only load
+files conditionally
+
+`load` always loads the file, even if it was previously loaded, meaning
+it can be used to load files that have been changed since the first load,
+which overrides the previous functionality
 
 ### 1.3.3 "Require"-ing a feature ###
+`require` if called more than once does not reload files that have
+already been loaded (Ruby keeps track, unlike with `load`).
+
+`require` is more abstract than load (You don't require a file, you
+require a feature), and usually don't specify the file extension
+
+`require` doesn't know about the current working directory, but it can
+be added as follows:
+`require "./file.rb"` or `$: << "."`
+
+`require` can also be given a fully qualified file path.
+
+Typically `require` is used more frequently than `load`
 
 ### 1.3.4 require_relative ###
+`require_relative` can also be used to load files by searching relative
+to the directory in which the file it is called from resides.  This
+does not manipulate the load path to include the current directory
 
 ## 1.4 Out-of-the-box Ruby tools and applications ##
 
