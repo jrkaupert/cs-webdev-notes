@@ -336,10 +336,72 @@ values or return in the middle of a method.
 ## 2.2 Crafting an object: The behavior of a ticket ##
 
 ### 2.2.1 The ticket object, behavior first ###
+Ticket example:
+
+```ruby
+ticket = Object.new
+
+def ticket.date
+  "01/02/03"
+end
+
+def ticket.venue
+  "Town Hall"
+end
+
+def ticket.event
+  "Author's reading"
+end
+
+def ticket.performer
+  "Mark Twain"
+end
+
+def ticket.seat
+  "Second Balcony, row J, seat 12"
+end
+
+def ticket.price
+  5.50
+end
+```
+
+In this example, most of the methods return string values, other than
+`price` which returns a floating point number.
 
 ### 2.2.2 Querying the ticket object ###
+Information about the ticket can be printed using `print` or `puts`
+and by calling `ticket.seat` or the desired ticket method.  The return
+values of each method are embedded in the printed message:
+
+```ruby
+print "This ticket is for: "
+print ticket.event + ", at "
+print ticket.venue + ", on "
+puts ticket.date + "."
+print "The performer is "
+puts ticket.performer + "."
+print "The seat is "
+print ticket.seat + ", "
+print "and it costs $"
+puts "%.2f." % ticket.price
+```
+
+The ability for the program to useful stuff resides in the object. In
+Ruby it's all about asking objects to do things and tell us things.
 
 ### 2.2.3 Shortening the ticket code via string interpolation ###
+*String interpolation* provides a mechanism for easily putting anything
+into strings.  The above example can be rewritten as:
+
+```ruby
+puts "This ticket is for: #{ticket.event}, at #{ticket.venue}." +
+  "The performer is #{ticket.performer}." +
+  "The seat is #{ticket.seat}, " +
+  "and it costs $#{"%.2f." % ticket.price}"
+```
+Everything in the `#{..}` gets calculated separately and then inserted
+into the string.
 
 ### 2.2.4 Ticket availability: Expressing Boolean state in a method ###
 
