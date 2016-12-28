@@ -228,8 +228,29 @@ to the directory in which the file it is called from resides.  This
 does not manipulate the load path to include the current directory
 
 ## 1.4 Out-of-the-box Ruby tools and applications ##
+Ruby comes installed with a few command-line tools installed in the
+'bindir' directory:
+
+- `ruby` - The interpreter
+- `irb` - The interactive ruby interpreter
+- `rdoc` and `ri` - Ruby documentation tools
+- `rake` - Ruby `make`, a task-management utility
+- `gem` - a Ruby library and application package-management utility
+- `erb` - a templating system
+- `testrb` - a high-level tool for use with the Ruby test framework
 
 ### 1.4.1 Interpreter command-line switches ###
+Commonly used command-line switches:
+```ruby
+-c # check syntax of program without executing it
+-w # give warning messages during program execution
+-e # execute code provided in quotation marks on the command line
+-l # line mode: print a newline after every line of output
+-rname # require the named feature
+-v # show Ruby version info and execute program in verbose mode
+--version # show Ruby version info
+-h # show info about all command-line switches for the interpreter
+```
 
 ### 1.4.2 A closer look at interactive Ruby interpretation with irb ###
 
