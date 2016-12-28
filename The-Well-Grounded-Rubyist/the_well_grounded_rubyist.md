@@ -253,10 +253,28 @@ Commonly used command-line switches:
 ```
 
 ### 1.4.2 A closer look at interactive Ruby interpretation with irb ###
+`irb` processes Ruby commands interactively, making it great for testing
+code or learning Ruby
+
+`irb --simple-prompt` will keep `irb` output shorter
+
+`--noecho` can be used to prevent `irb` from reporting back results
+
+`exit` can be used to exit `irb`
 
 ### 1.4.3 ri and RDoc ###
+`ri` = Ruby Index command-line tool
+`rdoc` = Ruby Documentation (RDoc) system command-line tool
+
+`rdoc` looks at comments in program files and if correctly formatted,
+organizes them and creates nicely formatted documentation
+
+`ri` displays RDoc information. For example, `ri String#upcase` will
+display information about the upcase String method.  The `#` indicates
+it is an instance method, instead of a class method which would use `::`
 
 ### 1.4.4 The rake task-management utility ###
+
 
 ### 1.4.5 Installing packages with the gem command ###
 
