@@ -274,9 +274,23 @@ display information about the upcase String method.  The `#` indicates
 it is an instance method, instead of a class method which would use `::`
 
 ### 1.4.4 The rake task-management utility ###
+`rake` is a task management utility that reads Rakefiles
 
+The `--tasks` flag can be used to see all of the defined tasks in a
+Rakefile
+
+Tasks can be invoked using `rake <taskname>` and can be namespaced using
+colons
 
 ### 1.4.5 Installing packages with the gem command ###
+Gems can be installed using `gem install <gemname>`, or locally using
+`gem install /path/to/my/file.gem`
+
+Gems aren't shown in the initial load path (`$:`), but they can be
+included via `require` which will put them on the load path
+
+Gems can have multiple versions installed on the same system and can
+be selected by version number `gem "cucumber", "2.0.1"`
 
 # Chapter 2: Objects, methods, and local variables #
 
