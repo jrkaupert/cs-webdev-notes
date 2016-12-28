@@ -404,6 +404,13 @@ Everything in the `#{..}` gets calculated separately and then inserted
 into the string.
 
 ### 2.2.4 Ticket availability: Expressing Boolean state in a method ###
+`true` and `false` are special objects in Ruby that represent results of
+comparison operations
+
+Ruby methods may end in a `?` to indicate they evaluate to `true` or `false`
+
+All Ruby objects except `false` and `nil` evaluate to `true` in a Boolean
+context
 
 ## 2.3 The innate behaviors of an object ##
 
