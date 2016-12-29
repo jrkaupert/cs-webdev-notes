@@ -556,14 +556,75 @@ or right of the list of parameters
 4. You can't have more than one sponge parameter in a list of arguments
 
 ## 2.5 Local variables and variable assignment ##
+By convention, local variables start with a lowercase letter or underscore
+and are made of alphanumerics and underscores
+
+Local variables have a limited scope such as a method definition.  Local
+variable names can be reused in different scopes as a result
 
 ### 2.5.1 Variables, objects, and references ###
+Variables in Ruby (well, most of them) don't hold object values, but instead
+contain references to objects.  
+
+During assignment, the variable name on the left receives a reference to the
+object on the right.
+
+During assignment from one variable to another, the variable on the left
+receives a copy of the reference stored in the variable on the right, meaning
+both variables now contain references to the same object, meaning changes to
+that object affect both variables.
+
+Integers, symbols, and `true` and `false` and `nil` are stored as immediate
+values rather than references.  Ruby dereferences them automatically. As a
+result of integers behaving this way, Ruby does not contain `++` type operators
+like other languages.
+
+Every object in Ruby must have one or more references to have object, or its
+memory space is released.
 
 ### 2.5.2 References in variable assignment and reassignment ###
+When a variable is assigned an object, the variable is wiped clean and a new
+assignment is made, referencing a new object.  Any variables referencing the
+old object maintain those references.
 
 ### 2.5.3 References and method arguments ###
+Ruby has some ways to protect objects from being changed if needed:
+
+The `dup` method duplicates an object and the `freeze` method prevents it
+from being changed at all:
+```ruby
+def change_string(str)
+  str.replace("New string content!")
+end
+
+s = "Original string content!"
+change_string(s.dup)
+puts s # "Original string content!"
+s.freeze
+change_string(s) # RuntimeError: can't modify frozen string
+```
+There is no unfreeze method, however.  Freezing is forever.  Frozen objects
+that are `clone`ed have their clones also frozen, but frozen objects that are
+`dup`ed have their duplicates not frozen.
+
+If an array is frozen, while the array itself cannot be changed, the objects
+inside it can if they are not also frozen.  **A reference to an object inside
+a collection is not the same as the reference to the collection**
 
 ### 2.5.4 Local variables and the things that look like them ###
+When Ruby sees a bare identifier, it interprets as one of three things:
+1. A local variable
+2. A keyword
+3. A method call
+
+*Keywords* = special reserved values that can't be used as variable names
+
+Rules for how Ruby decides how to handle bare identifiers:
+1. If keyword, it's a keyword
+2. If there's an equal sign to the right of the identifier, it's a local
+variable
+3. Otherwise, it's assumed to be a method call
+4. If it's not one of the above three, Ruby will throw a `NameError`
 
 # Chapter 3: Organizing objects with classes #
 
