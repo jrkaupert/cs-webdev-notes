@@ -473,17 +473,87 @@ collisions
 Usually the dot operator will be used to send messages to objects, but the
 `send` command is powerful and may warrant use (but make sure to use it safely,
 likely with `respond_to?` - don't want to just send arbitrary messages to
-objects) 
+objects)
 
 ## 2.4 A close look at method arguments ##
+- Methods can take zero or more arguments
+- Methods may take variable number of arguments
 
 ### 2.4.1 Required and optional arguments ###
+Ruby will indicate there's a problem if you don't supply the correct number
+of arguments to a method (throws `ArgumentError`)
+
+Any number of arguments may be provided to a method that has an asterisk
+in front of one of its arguments:
+
+```ruby
+def two_or_more(a, b, *c)
+  puts "I require two or more arguments!"
+  puts "And sure enough, I got: "
+  p a, b, c
+```
+
+In the above example, `a` and `b` are required, but `*c` will collect any other
+arguments that are sent and put them into an array in the variable `c`
+
+Using `p` to print rather than `puts` or `print` will display `c` as an array
+rather than each element alone
+
+Arguments may be made optional by giving them default values
 
 ### 2.4.2 Default values for arguments ###
+When an argument with a default value is not supplied to the method, the method
+uses the default value instead:
+
+```ruby
+def default_args(a, b, c=1)
+  puts "Values of variables: ", a, b, c
+end
+
+default_args(3, 2)
+
+# Values of variables:
+# 3
+# 2
+# 1
+```
+
+If a value is supplied to a parameter with a default, that value is used instead
 
 ### 2.4.3 Order of parameters and arguments ###
+When multiple values are provided to a method with a starred parameter, the
+method will try to assign values to as many variables as possible.  If the
+method runs out, it will assign to the starred parameter last after all required
+parameters have been assigned, even if they come after the starred parameter in
+the definition:
+
+```ruby
+def mixed_args(a, b, *c, d)
+  puts "Arguments:"
+  p a, b, c, d
+end
+mixed_args(1, 2, 3, 4, 5)
+# Arguments:
+# 1
+# 2
+# [3, 4]
+# 5
+
+mixed_args(1, 2, 3)
+# Arguments:
+# 1
+# 2
+# []
+# 3
+```
 
 ### 2.4.4 What you can't do in argument lists ###
+Parameters are handled via a priority list:
+1. Required parameters are highest regardless of whether they occur at the left
+or right of the list of parameters
+2. Optional parameters have to occur in the middle
+3. You can't put default-valued arguments after a sponge (starred) parameter
+4. You can't have more than one sponge parameter in a list of arguments
 
 ## 2.5 Local variables and variable assignment ##
 
