@@ -413,12 +413,67 @@ All Ruby objects except `false` and `nil` evaluate to `true` in a Boolean
 context
 
 ## 2.3 The innate behaviors of an object ##
+Every object is created with an initial set of methods which can be viewed with
+the `methods` method (use `sort` to make it easier to search) `p Object.new.methods.sort`
 
 ### 2.3.1 Identifying objects uniquely with the object_id method ###
+Every object in Ruby has a unique ID value that can be accessed using
+`object_id`
+
+The following code produces two variables that both point to the same object:
+```ruby
+a = Object.new
+b = a
+```
+
+The following code produces 2 objects that appear to be the same but aren't:
+```ruby
+string_1 = "Hello"
+string_2 = "Hello"
+```
+
+Object ID is just one way to compare equality of objects.
 
 ### 2.3.2  Querying an object's abilities with the respond_to? method ###
+Ruby objects respond to messages.  Depending on whether or not a method has
+been defined for an object, the object will or will not respond.
+
+The `respond_to?` method can be used to determine in advance if an object can
+handle the message you want to send
+
+```ruby
+obj = Object.new
+if obj.respond_to?("talk")
+  obj.talk
+else
+  puts "Sorry, the object doesn't understand the 'talk' message"
+end
+```
+
+`respond_to?` is an example of **introspection** or **reflection**, terms that
+refer to looking at the state of a program during execution, similar to using
+the `methods` method described earlier
 
 ### 2.3.3 Sending messages to objects with the send method ###
+The `send` method can be used to send messages to objects when the message
+is not known in advance:
+
+```ruby
+if ticket.respond_to?(request)
+  puts ticket.send(request)
+else
+  puts "No such information available"
+end
+```
+
+The methods `__send__` and `public_send` can be used instead of `send` as a
+safer alternative since `send` is often used by libraries and can cause
+collisions
+
+Usually the dot operator will be used to send messages to objects, but the
+`send` command is powerful and may warrant use (but make sure to use it safely,
+likely with `respond_to?` - don't want to just send arbitrary messages to
+objects) 
 
 ## 2.4 A close look at method arguments ##
 
