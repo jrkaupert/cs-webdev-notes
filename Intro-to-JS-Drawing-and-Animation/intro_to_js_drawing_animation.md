@@ -18,3 +18,17 @@ strokeWeight(thickness);
 stroke(red, green, blue); // colors a stroke
 noStroke(); // turn off line for a shape
 ```
+
+# Basic Animation Reference #
+
+```js
+var x = 10;
+draw = function() {
+  // code to draw shapes
+
+  x = x + 1; // increase interval to increase speed; increment in pixels/frame
+};
+```
+
+`draw` function can also accept `mouseX` and `mouseY` parameters to accept
+user input.  Can create interactive stuff like games using this!
