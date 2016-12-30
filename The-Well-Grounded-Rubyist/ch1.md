@@ -1,3 +1,5 @@
+[Table of Contents](_toc.md)
+
 # Chapter 1: Bootstrapping your Ruby literacy #
 - Ruby is an object-oriented language
 - objects are created by classes
@@ -233,6 +235,7 @@ Ruby comes installed with a few command-line tools installed in the
 
 ### 1.4.1 Interpreter command-line switches ###
 Commonly used command-line switches:
+
 ```ruby
 -c # check syntax of program without executing it
 -w # give warning messages during program execution
@@ -283,3 +286,7 @@ included via `require` which will put them on the load path
 
 Gems can have multiple versions installed on the same system and can
 be selected by version number `gem "cucumber", "2.0.1"`
+
+[Table of Contents](_toc.md)
+
+[Next Chapter](ch2.md)

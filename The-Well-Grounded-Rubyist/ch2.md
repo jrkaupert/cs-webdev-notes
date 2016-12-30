@@ -1,3 +1,7 @@
+[Table of Contents](_toc.md)
+
+[Previous Chapter](ch1.md)
+
 # Chapter 2: Objects, methods, and local variables #
 Objects receive messages which usually correspond to names of methods
 the objects are being asked to execute.  Objects are usually represented
@@ -255,6 +259,7 @@ mixed_args(1, 2, 3)
 
 ### 2.4.4 What you can't do in argument lists ###
 Parameters are handled via a priority list:
+
 1. Required parameters are highest regardless of whether they occur at the left
 or right of the list of parameters
 2. Optional parameters have to occur in the middle
@@ -319,6 +324,7 @@ a collection is not the same as the reference to the collection**
 
 ### 2.5.4 Local variables and the things that look like them ###
 When Ruby sees a bare identifier, it interprets as one of three things:
+
 1. A local variable
 2. A keyword
 3. A method call
@@ -326,8 +332,13 @@ When Ruby sees a bare identifier, it interprets as one of three things:
 *Keywords* = special reserved values that can't be used as variable names
 
 Rules for how Ruby decides how to handle bare identifiers:
+
 1. If keyword, it's a keyword
 2. If there's an equal sign to the right of the identifier, it's a local
 variable
 3. Otherwise, it's assumed to be a method call
 4. If it's not one of the above three, Ruby will throw a `NameError`
+
+[Table of Contents](_toc.md)
+
+[Next Chapter](ch3.md)

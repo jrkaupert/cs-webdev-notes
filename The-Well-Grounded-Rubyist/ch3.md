@@ -1,3 +1,7 @@
+[Table of Contents](_toc.md)
+
+[Previous Chapter](ch2.md)
+
 # Chapter 3: Organizing objects with classes #
 While objects can be created with `Object.new` and provided methods one at a
 time, Ruby offers classes as a way of bundling behaviors so many similar objects
@@ -59,3 +63,7 @@ objects and methods
 ### 3.7.2 Reassigning vs. modifying constants ###
 
 ## 3.8 Nature vs. nurture in Ruby objects ##
+
+[Table of Contents](_toc.md)
+
+[Next Chapter](ch4.md)
