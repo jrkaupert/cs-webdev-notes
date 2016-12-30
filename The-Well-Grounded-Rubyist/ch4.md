@@ -333,10 +333,39 @@ the `method_missing` will be located if overriden, or eventually at `Kernel` if
 not.
 
 ## 4.4 Class/module design and naming ##
+There are no definite rules that determine when code definition should be put
+into modules versus classes.  It is possible to overmodularize, however.
 
 ### 4.4.1 Mix-ins and/or inheritance ###
+Mix-ins from modules are similar to class inheritance.  Both provide a
+relationship from one object to another by inserting something into the
+method-lookup path.
+
+No single rule will result in the best design, but using class inheritance
+does use up an opportunity for a better class option to inherit from.
+
+Some considerations:
+- Modules don't have instances.  Noun-like things and their characteristics and
+properties may be best handled in classes, where adjective-like-things may be
+best handled in modules
+- Classes may only have a single superclass, but as many modules can be mixed
+in as needed.
 
 ### 4.4.2 Nesting modules and classes ###
+Class definitions can also be nested inside of modules:
+
+```ruby
+module Tools
+  class Hammer
+  end
+end
+
+h = Tools::Hammer.new # instantiates a new Hammer object via constant lookup
+```
+
+Nested modules/classes are often used to create namespaces for classes, modules,
+and methods.
+
 
 ---
 [Table of Contents](_toc.md)
