@@ -399,10 +399,50 @@ a `.` or `::` are used for class methods (`Ticket.most_expensive` or
   `Ticket::most_expensive`).
 
 ## 3.7 Constants up close ##
+Classes are primarily made of instance methods and/or class methods, but
+constants are also important in classes.
 
 ### 3.7.1 Basic use of constants ###
+Every constant begins with a capital letter.
+
+Constants are typically placed near the top of the class definition.
+
+Constants can be used in both instance and class methods.
+
+Constants from outside the class definition can also be used if `::` is used.
+This can be used to access constants in other modules (`Math::PI`)
+
+```ruby
+class Ticket
+  VENUES = ["Convention Center", "Fairgrounds", "Town Hall"]
+  def initialize(venue, date)
+    if VENUES.include?(venue)
+      @venue = venue
+    else
+      raise ArgumentError, "Unknown venue #{venue}"
+    end
+    @date = date
+  end
+end
+puts Ticket::VENUES
+```
 
 ### 3.7.2 Reassigning vs. modifying constants ###
+It is possible to assign something to a constant you've already assigned.
+If you try to reassign to a constant, however, Ruby will throw a warning. Its
+generally better to not reassign constants and use variables instead if a value
+needs to change during program execution.
+
+It's also possible to change a constant by changing the object to which the
+constant refers:
+
+```ruby
+venues = Ticket::VENUES
+venues << "High School Gym" # << adds new element to existing array
+```
+
+In the above example, no warning is given because the array is being modified
+rather than the constant itself.
 
 ## 3.8 Nature vs. nurture in Ruby objects ##
 
