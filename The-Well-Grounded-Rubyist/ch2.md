@@ -2,6 +2,8 @@
 
 [Previous Chapter](ch1.md)
 
+---
+
 # Chapter 2: Objects, methods, and local variables #
 Objects receive messages which usually correspond to names of methods
 the objects are being asked to execute.  Objects are usually represented
@@ -339,6 +341,7 @@ variable
 3. Otherwise, it's assumed to be a method call
 4. If it's not one of the above three, Ruby will throw a `NameError`
 
+---
 [Table of Contents](_toc.md)
 
 [Next Chapter](ch3.md)

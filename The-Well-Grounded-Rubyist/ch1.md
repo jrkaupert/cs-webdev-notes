@@ -1,5 +1,7 @@
 [Table of Contents](_toc.md)
 
+---
+
 # Chapter 1: Bootstrapping your Ruby literacy #
 - Ruby is an object-oriented language
 - objects are created by classes
@@ -287,6 +289,7 @@ included via `require` which will put them on the load path
 Gems can have multiple versions installed on the same system and can
 be selected by version number `gem "cucumber", "2.0.1"`
 
+---
 [Table of Contents](_toc.md)
 
 [Next Chapter](ch2.md)

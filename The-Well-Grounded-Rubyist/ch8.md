@@ -2,6 +2,7 @@
 
 [Previous Chapter](ch7.md)
 
+---
 # Chapter 8: Strings, symbols, and other scalar objects #
 
 ## 8.1 Working with strings ##
@@ -12,6 +13,7 @@
 
 ## 8.4 Times and dates ##
 
+---
 [Table of Contents](_toc.md)
 
 [Next Chapter](ch9.md)
