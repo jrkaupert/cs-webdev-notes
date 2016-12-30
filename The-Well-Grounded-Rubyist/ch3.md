@@ -295,12 +295,50 @@ With `true`, `attr` includes both read/write, without `true`, `attr` provides
 only read.  `attr_accessor` is clearer in its intent, however.
 
 ## 3.5 Inheritance and the Ruby class hierarchy ##
+**Inheritance** is a relationship between two classes, a superclass and a
+subclass, where the subclass inherits from the superclass and instances of the
+subclass acquire the methods of the superclass.
+
+In Ruby, the `<` symbol indicates one class is a subclass of another:
+```ruby
+class Magazine < Publication # Magazine is a sublcass of Publication
+end
+```
 
 ### 3.5.1 Single inheritance: One to a customer ###
+Every Ruby class can have one and only one superclass (**single inheritance**)
+
+Ruby **modules** allow you to get around single inheritance in order to provide
+additional functionality for objects outside of inheritance.
+
+In Ruby, inheritance provides a nice way to share method definitions across
+classes, but is not as strict in representing how real-world objects might
+relate to one another.  A tree cannot adequately represent the entire class
+hierarchy in Ruby (though every class ultimately descends from `Object`).
 
 ### 3.5.2 Object ancestry and the not-so-missing link: The Object class ###
+The `Object` class is (almost) at the top of the inheritance chain.  All objects
+inherit from `Object` at some point:
+
+```ruby
+class C
+end
+class D < C
+end
+puts D.superclass # C
+puts D.superclass.superclass # Object
+```
+
+All methods available to `Object` are also available to every object
 
 ### 3.5.3 El Viejo's older brother: BasicObject ###
+The `Object` class actually inherits from another class: `BasicObject`
+
+The `BasicObject` object has very few methods (around 8, compared to `Object`'s
+55 or so)
+
+Normally it's not necessary to create `BasicObject` objects or subclass it, but
+there may be rare needs
 
 ## 3.6 Classes as objects and message receivers ##
 
