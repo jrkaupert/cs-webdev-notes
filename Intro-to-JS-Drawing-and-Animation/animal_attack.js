@@ -72,8 +72,8 @@ function animalAttack(processing) {
         }
     };
 };
-var myCanvas1 = document.getElementById("canvas1");
+var myCanvas3 = document.getElementById("canvas3");
 
 // attaching the animalAttack function to the canvas
-var p1 = new Processing(myCanvas1, animalAttack);
+var p3 = new Processing(myCanvas3, animalAttack);
 // p.exit(); //to detach it

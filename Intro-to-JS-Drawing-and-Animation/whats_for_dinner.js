@@ -6,6 +6,7 @@ function whatsForDinner(pr) {
 
     pr.draw = function() {
         pr.background(186, 145, 20); // wooden table
+        pr.fill(240,240,240);
         pr.ellipse(200, 200, 350, 350); // plate
         pr.ellipse(200, 200, 300, 300);
 
@@ -37,8 +38,8 @@ function whatsForDinner(pr) {
     };
 
 };
-var myCanvas2 = document.getElementById("canvas2");
+var myCanvas1 = document.getElementById("canvas1");
 
 // attaching the animalAttack function to the canvas
-var p2 = new Processing(myCanvas2, whatsForDinner);
+var p1 = new Processing(myCanvas1, whatsForDinner);
 // p.exit(); //to detach it

@@ -1,3 +1,7 @@
+header {
+  text-align: center;
+}
+
 canvas {
   border: 2px solid black;
 }
@@ -6,6 +10,7 @@ canvas {
 #flexContent {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
 
 .projectContainer {
@@ -14,7 +19,7 @@ canvas {
   align-items: center;
   width: 440px;
   border: 1px solid gray;
-  margin: 5px;
+  background: lightgray;
 }
 
 .projectHeader h1 {
