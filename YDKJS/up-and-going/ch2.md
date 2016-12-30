@@ -122,6 +122,7 @@ of what items are being compared
 with coercion allowed, and `===` checks for value equality without coercion
 allowed ('strict equality')
 - Example:
+
 ```javascript
 var a = '101';
 var b = 101;
@@ -135,9 +136,11 @@ of the ordering
 for more details on corner cases on coercion in comparisons
 
 Some simple rules for using `==` vs. `===`:
+
 1. if either side could be the `true` or `false` value, avoid `==`
 2. if either value could be `0`, "", or [] (empty array), avoid `==`
 3. Otherwise you can use `==`, which will often improve readability
+
 If you can't be sure of the values, use `===`
 
 For these comparisons, non-primitive values such as `object`, `function`, and
@@ -167,6 +170,7 @@ or global scope if outside of all functions
 throughout that scope (even if the value itself is declared before `var` is
 used)
 - Example:
+
 ```javascript
 var a = 2;
 
@@ -198,6 +202,7 @@ keyword.
 
 ## Conditionals ##
 - `if` statements:
+
 ```javascript
 if (stuff) {
   // do stuff
@@ -210,6 +215,7 @@ else {
 }
 ```
 - `switch` statements:
+
 ```javascript
 switch(stuff) {
   case 1:
@@ -226,7 +232,9 @@ switch(stuff) {
     // do the fallback option
 }
 ```
+
 - *Ternary* operator / *conditional* operator
+
 ```javascript
 var a = 100;
 var b = (a > 50) ? "foo" : "bar:";
@@ -248,17 +256,20 @@ also a variable (value) in the scope it is defined in
   - Can be passed to other functions
   - Can be returned from other functions
 - An anonymous function expression (has no name defined):
+
 ```javascript
 var foo = function() {
   // do stuff
 };
 ```
 - A *named* function expression:
+
 ```javascript
 var x = function bar() {
   // do more stuff
 };
 ```
+
 - Named function expressions are generally preferred, but there's a lot
 of reasons to use anonymous functions too
 
@@ -266,12 +277,14 @@ of reasons to use anonymous functions too
 - The examples in the previous section defined functions but did not
 actually execute them, however it is possible to execute a function
 expression where it is defined (*immediately invoked function expression*):
+
 ```javascript
 (function example(){
     console.log("Hello World!");
 })();
 // "Hello World!"
 ```
+
 - The parentheses that wrap the function definition prevent it from being
 treated as a normal function declaration
 - The `()` at the end actually execute the function expression immediately
@@ -284,6 +297,7 @@ affect scope outside of the function
 - *Closure* is a critical concept in JS, a way to remember and provide
 continued access to a function's scope and variables after the function has finished execution
 - Example:
+
 ```javascript
 function makeAdder(x) {
   // the passed in parameter 'x' is an inner variable
@@ -314,6 +328,7 @@ plusTen( 13 ); // 23
 - *Modules* provide a way to hide details of the implementation while
 maintaining a public API that can be accessed from outside users
 - Example:
+
 ```javascript
 // User is the module we are defining
 function User(){
@@ -342,6 +357,7 @@ function User(){
 var james = User();
 james.login( "james", "Password!");
 ```
+
 - `doLogin()` has closure over `username` and `password` and can access them
 after the `User()` function has executed
 - `publicAPI` is an object and has a single method `login`, which provides
@@ -357,6 +373,7 @@ purpose
 `object` varies depending on how the function is called
 - `this` does *not* refer to the function itself
 - Example:
+
 ```javascript
 function foo(){
   console.log( this.bar );
@@ -379,6 +396,7 @@ foo.call( obj2 );   // "obj2"    (rule 3 below)
 new foo();          // undefined (rule 4 below)
 ```
 Rules for `this` illustrated from above code:
+
 1. `foo()` sets `this` to the global object in non-strict mode. In strict mode
 `this` would be undefined and the `bar` property would error when accessed
 2. `obj1.foo()` sets `this` to the `obj1` object
@@ -394,6 +412,7 @@ property on another object (like a fallback if the property is missing)
 - The prototype reference link from an object to its fallback occurs when
 the object is created
 - Example:
+
 ```javascript
 var foo = {
   a: 42
@@ -417,6 +436,7 @@ objects are able to *delegate* needed behavior to one another
 ## Old & New ##
 - Two techniques to use newer JavaScript stuff before older browsers are
 able to handle:
+
   1. Polyfilling - taking definition of a newer feature and creating code that
   is equivalent but able to run in older browsers.  Not all features are
   able to be polyfilled.  Use ES5-Shim and ES6-Shim rather than creating own

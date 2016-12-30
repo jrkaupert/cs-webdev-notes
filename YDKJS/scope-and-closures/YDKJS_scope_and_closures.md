@@ -14,6 +14,7 @@ rules called *scope*
 
 ## Compiler Theory ##
 Traditional Compile Process:
+
 1. *Tokenizing* or *Lexing* = splitting strings of characters into sets of
 things that are meaningful to the language (*tokens*).  When tokens are defined
 in a *stateful* way, tokenizing is actually called *lexing*
@@ -25,6 +26,7 @@ called an *Abstract Syntax Tree (AST)*
 
 ## Understanding Scope ##
 Components to understanding scope:
+
 1. *Engine* - the piece that handles the compile process as a whole and JS
 execution
 2. *Compiler* - the piece that handles the details of compiling (parsing and
@@ -37,6 +39,7 @@ Example:
 ```javascript
 var a = 2;
 ```
+
 1. The compiler starts by performing lexing to break the statement into tokens
 and parses tokens into a tree
 2. During execution, the compiler sees `var a` and looks at the scope to see if
@@ -127,6 +130,7 @@ function foo(a) {
 }
 foo( 2 ); // 2 4 12
 ```
+
 - The above example has 3 nested scopes:
   1. global scope with the single identifier `foo`
   2. `foo` scope with 3 identifiers `a`, `bar`, and `b`
@@ -155,6 +159,7 @@ object property-access
 
 ## Cheating Lexical ##
 There are two mechanisms that can "cheat" lexical scope at run-time:
+
 1. `eval`
 2. `with`
 
@@ -413,6 +418,7 @@ they appear in:
 
 ### Garbage Collection ###
 Block scoping is also helpful in garbage collection for reclaiming memory:
+
 ```js
 function process(data){
   // do something interesting  
@@ -456,6 +462,7 @@ by the `click` scope
 
 ### `let` loops ###
 `let` is useful in handling loop variables:
+
 ```js
 for (let i=0; i<10; i++) {
   console.log(i);
@@ -466,6 +473,7 @@ console.log(i); //ReferenceError
 ### `const` ###
 ES6 also introduced `const`, which creates block-scoped constants, where
 changes to that value at a later time produces an error
+
 ```js
 var foo = true;
 
@@ -519,6 +527,7 @@ untouched until the program is executed.
 
 The first snippet of code from the previous section is actually handled as
 follows:
+
 ```js
 // Handled by compiler before program execution
 var a;
@@ -531,11 +540,10 @@ console.log( a );
 ```
 
 The second snippet of code from the previous section is handled as follows:
-```js
-var a;
-```
 
 ```js
+var a;
+
 console.log( a );
 a = 2;
 ```
@@ -881,6 +889,7 @@ the inner functions but not the inner data variables (which remain hidden
 be used to access property methods on the API like `foo.doSomething()`
 
 Two requirements for module pattern:
+
 1. Must be an outer enclosing function that is invoked at least once, where
 each invocation creates a new module instance
 2. The enclosing function must return back at least a single inner function
