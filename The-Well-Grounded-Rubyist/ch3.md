@@ -86,8 +86,58 @@ across multiple files, but generally it's better to not do so to make it easier
 to follow what's going on in the program.
 
 ## 3.2 Instance variables and object state ##
+**instance variables** allow objects to save state for later retrieval
+
+Different from other variables, instance variables:
+- have names that start with a single `@` sign
+- are only visible to the object they belong to
+- can be used by any method defined within the object's class if initalized in
+one of that class's methods (see example below)
+
+```ruby
+class Person
+  def set_name(string)
+    puts "Setting person's name..."
+    @name = string
+  end
+
+  def get_name
+    puts "Returning the person's name..."
+    @name
+  end
+end
+
+joe = Person.new
+joe.set_name("Joe")
+puts joe.get_name  # `get_name` is able to access @name defined in `set_name`
+```
 
 ### 3.2.1 Initializing an object with state ###
+When defining a class, a special method called `initialize` may be used that
+will be called every time a new instance of that class is created
+
+`initialize` can be used to set object state when the object is created:
+
+```ruby
+class Ticket
+  def initialize(venue, date)
+    @venue = venue
+    @date = date
+  end
+
+  def venue #getter method for @venue
+    @venue
+  end
+  def date #getter method for @venue
+    @date
+  end
+end
+```
+
+From the above example, the Ticket object is initialized with both a 'venue'
+and a 'date', and these values can be read from the object from the two getter
+methods defined after `initialize`, providing the value of these instance
+variables
 
 ## 3.3 Setter methods ##
 
