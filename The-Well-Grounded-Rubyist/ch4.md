@@ -164,14 +164,139 @@ like very different objects)
 ## 4.2 Modules, classes, and method lookup ##
 
 ### 4.2.1 Illustrating the basics of method lookup ###
+When looking up methods, an object will undergo the following process until
+the method being searched for is found or an error condition occurs:
+
+- Does my class define an instance method with this name?
+- If no, does my class mix in any modules that contain this name?
+- If no, does my superclass define an instance method with this name?
+- If no, does my superclass mix in any modules that contain this name?
+
+The error condition gets triggered by the `method_missing` method, which gets
+called when messages are otherwise not matched.  The overall search process
+can continue all the way up the inheritance chain to the `BasicObject` class.
+
+In reality, much of the common behavior of all Ruby objects is mixed into the
+`Object` class via the `Kernel` module.  
+
+The most basic and fundamental Ruby methods are defined in the `Kernel` module.
+
+The definitions of `BasicObject`, `Object`, and `Kernel` are written in C.
 
 ### 4.2.2 Defining the same method more than once ###
+As with classes, if a method is redefined in a module, the latest takes
+precedence over the earlier definition.
+
+From an object's perspective, however, having access to two or more methods
+with the same name is possible since they can come from a variety of classes
+and modules.
+
+An object can only see one version of a method with a given name at a given
+time.  If the method-lookup path includes multiples, the first encountered is
+the one used.
+
+If multiple modules are mixed in with the same method names, the modules are
+searched in reverse order of inclusion (most recent module first).  Reincluding
+a module does not do anything, so a second include of a module will not be
+prioritized.
 
 ### 4.2.3 How prepend works ###
+With the `prepend` method, a prepended module is searched before the class is
+when trying to resolve messages to method names.
+
+```ruby
+module MeFirst
+  def report
+    puts "Hello from module!"
+  end
+end
+
+class Person
+  prepend MeFirst
+  def report
+    puts "Hello from class!"
+  end
+end
+
+p = Person.new
+p.report # "Hello from module!"
+```
+
+As opposed to `include`, `prepend` forces the module to be searched before the
+class.  This can be used to override a class's methods with a module's
 
 ### 4.2.4 The rules of method lookup summarized ###
+Objects look for methods when resolving messages in the following order
+
+1. Modules prepended to the class, in reverse order of prepending
+2. The object's class
+3. Modules mixed into the class, in reverse order of inclusion
+4. Modules prepended to the superclass
+5. The object's superclass
+6. Modules included in the superclass
+7. Up the inheritance chain until `Object`, the `Kernel` mix-in, and
+`BasicObject`
 
 ### 4.2.5 Going up the method seach path with super ###
+The `super` keyword can be used to jump up the method-lookup path for the
+method being executed:
+
+```ruby
+module M
+  def report
+    puts "'report' method in module M"
+  end
+end
+class C
+  include M
+  def report
+    puts "'report' method in class C"
+    puts "About to trigger the next higher-up report method..."
+    super
+    puts "back from the 'super' call."
+  end
+end
+c = C.new
+c.report
+
+# 'report' method in class C
+# About to trigger the next higher-up report method...
+# 'report' method in module M
+# Back from the 'super' call.
+```
+
+Sometimes when writing a subclass, `super` makes it convenient to keep most, but
+not all of the behavior:
+
+```ruby
+class Bicycle
+  atrr_reader :gears, :wheels, :seats
+  def initialize(gears = 1)
+    @wheels = 2
+    @seats = 1
+    @gears = gears
+  end
+end
+
+class Tandem < Bicycle
+  def initialize(gears)
+    super
+    @seats = 2
+  end
+end
+```
+
+The `super` keyword provides a clean way to make a subclass look almost like its
+parent class.  All of the previous methods in `initialize` in the above code are
+called in Tandem's `initialize`, and then `@seats` is set differently.
+
+`super` can also be called with arguments and pass those to the higher-up method
+- called with no arguments, `super` uses the arguments that were passed into
+the method `super` was called in
+- called with an empty argument list, `super()` sends no arguments to the
+higher-up method even if the method `super()` resides in had arguments
+- called with specific arguments, `super(a, b, c)` passes arguments to the
+higher-up method as-is
 
 ## 4.3 The method_missing method ##
 
