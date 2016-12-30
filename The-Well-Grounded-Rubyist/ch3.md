@@ -11,12 +11,79 @@ Every object is an instance of a class, and classes are a way of organizing
 objects and methods
 
 ## 3.1 Classes and Instances ##
+Classes are made up of method definitions and exist to create objects
+(**instantiate**) that are instances of that class.
+
+Instantiation example:
+```ruby
+obj = Object.new
+```
+
+The `new` method is a **constructor**, a method used to create a new instance
+of the class.  Classes respond to messages like any other object.
+
+Classes are defined with the `class` keyword, and are named with **constants**,
+an identifier that **starts with a capital letter**.  Constants don't change
+during program execution.
+
+Defining and instantiating a new class:
+```ruby
+# define the class
+class Ticket
+  def event
+    "can't really be specified yet..."
+  end
+end
+
+# Create the new object
+ticket = Ticket.new
+
+# call the `event` method
+puts ticket.event # can't really be specified yet.
+```
 
 ### 3.1.1 Instance Methods ###
+In contrast to defining methods directly on objects, methods can also be defined
+in classes to share them with all objects of that class's type.
+
+Such methods are called **instance methods** because they belong to any instance
+of the class.
+
+Methods defined for a single object (as opposed to all instances) are called
+**singleton methods**
 
 ### 3.1.2 Overriding methods ###
+Instance methods defined in a class can also be overriden if redefined later.
+The newest version takes precedence.
 
 ### 3.1.3 Reopening classes ###
+It is also possible to **reopen** a class definition and add new methods later:
+```ruby
+class C
+  def x
+  end
+end
+
+# reopen the class
+class C
+  def y
+  end
+end
+```
+
+The above code is equivalent to the following:
+```ruby
+class C
+  def x
+  end
+  def y
+  end
+end
+```
+
+The ability to reopen class definitions allows class definitions to be spread
+across multiple files, but generally it's better to not do so to make it easier
+to follow what's going on in the program.
 
 ## 3.2 Instance variables and object state ##
 
