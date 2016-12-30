@@ -7,9 +7,17 @@ canvas {
 }
 
 
-#flexContent {
+
+#flexWrapper {
   display: flex;
-  flex-direction: row;
+  flex-flow: row wrap;
+}
+
+
+.flexContent {
+  width: 100%;
+  display: flex;
+  flex-flow: row wrap;
   justify-content: space-around;
 }
 
@@ -20,6 +28,7 @@ canvas {
   width: 440px;
   border: 1px solid gray;
   background: lightgray;
+  margin-bottom: 40px;
 }
 
 .projectHeader h1 {

@@ -6,8 +6,8 @@
 API located at [http://processingjs.org/reference/](http://processingjs.org/reference/)
 
 ```js
-ellipse(xPos, yPos, width, height);
-rect(xPos, yPos, width, height);
+ellipse(xPos, yPos, width, height); //relative to center of ellipse
+rect(xPos, yPos, width, height); //relative to upper right corner
 line(xStart, yStart, xEnd, yEnd);
 arc(x, y, width, height, start, stop);
 
@@ -32,3 +32,11 @@ draw = function() {
 
 `draw` function can also accept `mouseX` and `mouseY` parameters to accept
 user input.  Can create interactive stuff like games using this!
+
+# Basic Text Reference #
+
+```js
+fill(0, 0, 0); //Have to change fill or will be same color as background!
+textSize(24);
+text("text", xpos, ypos); // relative to lower left corner
+```
