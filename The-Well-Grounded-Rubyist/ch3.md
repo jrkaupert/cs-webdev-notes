@@ -341,16 +341,62 @@ Normally it's not necessary to create `BasicObject` objects or subclass it, but
 there may be rare needs
 
 ## 3.6 Classes as objects and message receivers ##
+Classes are objects, but special ones (they can create new objects).  Like all
+objects, they can receive messages, have methods added to them, and be passed
+around to other objects as method arguments.  
+
+Classes can also be created in more than one way.
 
 ### 3.6.1 Creating class objects ###
+Every class is an instance of a class called `Class`
+
+In addition to using the `class` keyword, classes can also be created as
+follows using a constructor call (`new`):
+
+```ruby
+my_class = Class.new
+```
+
+Class objects are usually represented by constants, but in the previous code,
+the class object was bound to a local variable instead.
 
 ### 3.6.2 How class objects call methods ###
+Where do class objects get their methods? Objects get their methods from the
+following places, and classes are mostly similar:
+
+1. From their class
+2. From the superclass and earlier ancestors
+3. From their own set of singleton methods
+
+Instances of `Class` such as `Ticket` (in this book's examples) can call
+instance methods such as `new` that are defined on `Class`.
+
+Since the superclass of `Class` is `Module`, instances of `Class` can also
+access `Module` methods such as `attr_accessor` and similar.
 
 ### 3.6.3 A singleton method by any other name... ###
+When singleton methods are defined on a class object, they are referred to as
+**class methods**.  Class methods send messages to the class itself rather
+than to an instance of that class.
 
 ### 3.6.4 When, and why, to write a class method ###
+Class methods are useful because some behaviors related to a class shouldn't
+be performed by specific instances of that class.  For example, the `new` method
+makes sense for the class itself, but not for instances of the class (A ticket
+object should not be able to spawn other tickets, but it makes sense for the
+ticket class to be able to).
 
 ### 3.6.5 Class methods vs. instance methods ###
+Object instances do not have access to class methods.
+
+- Classes are objects
+- Instances of classes are objects too
+- Class objects have their own methods, state, and identity, and these aren't
+shared with instances of the class.
+
+Typically, instance methods are given using a `#` mark (`Ticket#price`), while
+a `.` or `::` are used for class methods (`Ticket.most_expensive` or
+  `Ticket::most_expensive`).
 
 ## 3.7 Constants up close ##
 
