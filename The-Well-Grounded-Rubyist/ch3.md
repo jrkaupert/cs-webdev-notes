@@ -1,6 +1,9 @@
+
 [Table of Contents](_toc.md)
 
 [Previous Chapter](ch2.md)
+
+---
 
 # Chapter 3: Organizing objects with classes #
 While objects can be created with `Object.new` and provided methods one at a
@@ -445,7 +448,25 @@ In the above example, no warning is given because the array is being modified
 rather than the constant itself.
 
 ## 3.8 Nature vs. nurture in Ruby objects ##
+Similar to other object-oriented languages, Ruby lets you model domains with
+a general/specific superclass-to-subclass relationship.
 
+The `is_a?` method can be used to determine if an object has a given class as
+its class or an ancestor class
+
+Ruby also lets objects be individual modified, outside of their class hierarchy,
+and classes can gain new behaviors during program execution as well.  As a
+result, the object's class does not tell everything about an object's
+capabilities.
+
+The `respond_to?` method is useful in knowing if objects can handle a specific
+method.
+
+In general, most Ruby programmers are conservative with the power offered by
+the language, opting to add methods directly to objects primarily for class
+methods (most singleton method definitions you will encounter).
+
+---
 [Table of Contents](_toc.md)
 
 [Next Chapter](ch4.md)
