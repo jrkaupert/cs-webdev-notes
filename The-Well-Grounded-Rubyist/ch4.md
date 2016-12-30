@@ -299,8 +299,38 @@ higher-up method even if the method `super()` resides in had arguments
 higher-up method as-is
 
 ## 4.3 The method_missing method ##
+The `Kernel` module has a `method_missing` instance method that fires anytime
+an object receives a message it doesn't know how to respond to.
+
+The `method_missing` method can be overriden on a singleton basis or for the
+object's class or superclasses.
+
+When overriden, the `method_missing` method signature needs to be adhered to,
+with the first argument being the name of the missing method, and the second
+argument being the \*args sponge parameter for any remaining arguments.
+
+Even when overriden, the original `method_missing` method is available using
+`super`
 
 ### 4.3.1 Combining method_missing and super ###
+One way to handle unrecognized messages using `method_missing` override is as
+follows:
+```ruby
+class Student
+  def method_missing(m, *args)
+    if m.to_s.start_with?("grade_for_")
+      # return the appropriate grade, based on parsing the method name
+    else
+      super
+    end
+  end
+end
+```
+
+In the above code, a call to any method beginning with `grade_for_` will return
+the appropriate grade.  Otherwise, the lookup will continue to `super` where
+the `method_missing` will be located if overriden, or eventually at `Kernel` if
+not.
 
 ## 4.4 Class/module design and naming ##
 
