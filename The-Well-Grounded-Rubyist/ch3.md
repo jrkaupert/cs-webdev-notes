@@ -218,10 +218,81 @@ return value, returning the assigned value and not the last expression evaluated
 in the method.
 
 ## 3.4 Attributes and the attr_* method family ##
+**Attributes** are object properties that can be read or written via the object
+
+Setters are **attribute writer** methods, getters are **attribute reader**
+methods.  Read/Write is more common terminology in Ruby compared to Get/Set.
+
+Ruby offers shortcuts for writing attribute-related methods
 
 ### 3.4.1 Automating the creation of attributes ###
+Previous code for the Ticket class example:
+```ruby
+class Ticket
+  def initialize(venue, date)
+    @venue = venue
+    @date = date
+  end
+  def price=(price)
+    @price = price
+  end
+  def venue
+    @venue
+  end
+  def date
+    @date
+  end
+  def price
+    @price
+  end
+```
 
-### 3.4.2 Summary of attr_* methods ###
+The above code has a lot of repetition in defining methods to read values from
+instance variables.  A cleaner way using a Ruby shortcut is:
+
+```ruby
+class Ticket
+  attr_reader :venue, :date, :price
+  attr_writer :price
+  def initialize(venue, date)
+    @venue = venue
+    @date = date
+  end
+end
+```
+
+This new code is much shorter and more informative.  It is easy to see that
+there are `venue`, `date`, and `price` attributes for the ticket object, and
+that each can be read, while only `price` can be written.
+
+Identifiers starting with `:` are called **symbols**, and are similar but a
+little different than strings (See [Chapter 8](ch8.md)).
+
+In the `attr_reader` call, no left-hand object or dot is present, so messages
+go to `self`, meaning the `Ticket` class object receives the messages. `self`
+is described in [Chapter 5](ch5.md).
+
+An additional shortcut for attributes that can be both read and written is
+the `attr_accessor` method:
+
+```ruby
+class Ticket
+  attr_reader :venue, :date
+  attr_accessor :price
+  def initialize(venue, date)
+    @venue = venue
+    @date = date
+  end
+end
+```
+
+Alternatively, `attr` can be used to do the same thing as `attr_accessor`:
+```ruby
+attr :price, true
+```
+
+With `true`, `attr` includes both read/write, without `true`, `attr` provides
+only read.  `attr_accessor` is clearer in its intent, however.
 
 ## 3.5 Inheritance and the Ruby class hierarchy ##
 
