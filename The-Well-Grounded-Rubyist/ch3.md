@@ -137,15 +137,85 @@ end
 From the above example, the Ticket object is initialized with both a 'venue'
 and a 'date', and these values can be read from the object from the two getter
 methods defined after `initialize`, providing the value of these instance
-variables
+variables.  Since the variable in the getter methods are the last value in the
+method, they are also the method's return value.
 
 ## 3.3 Setter methods ##
+Instance variables can also be set outside of the `initialize` method of a class
+
+Ruby offers a naming convention for setters so that 'set_' does not have to be
+appended to all setter methods
 
 ### 3.3.1 The equal sign (=) in method names ###
+Rather than using 'set_' method names everywhere, methods can be named to end
+with `=` instead to indicate they are setters:
+
+```ruby
+def price=(amount)
+  @price = amount
+end
+```
 
 ### 3.3.2 Syntactic sugar for assignment-like methods ###
+Ruby offers another way to call methods that end in `=` as well to make things
+read easier:
+
+```ruby
+# original way to set price
+ticket.price=(63.00)
+
+# alternative way
+ticket.price = 63.00
+```
+
+The alternate (sugared) syntax above makes the set operation look like
+assignment (which it is).
 
 ### 3.3.3 Setter methods unleashed ###
+While the `=` syntactic sugar option allows for clear setter methods, it can
+also be abused.  Ruby does check syntax, but does not enforce semantic meaning,
+so care should be taken to use `=` for methods that make sense.
+
+This syntax can also be used to filter data as well, however:
+
+```ruby
+class Ticket
+  def price=(amount)
+    if (amount * 100).to_i == amount * 100
+      @price = amount
+    else
+      puts "The price seems to be malformed"
+    end
+  end
+  def price
+    @price
+  end
+end
+```
+
+In the code above, price is checked to be in dollars and cents, where any digits
+beyond the hundredths place will be caught
+
+This syntax can also be used to normalize data:
+
+```ruby
+class TravelAgentSession
+  def year=(y)
+    @year = y.to_i
+    if @year < 100
+      @year = @year + 2000
+    end
+  end
+end
+
+# assume `date` is defined
+month, day, year = date.split('/')
+self.year = year
+```
+
+Note that setter methods behave like assignment statements with regard to their
+return value, returning the assigned value and not the last expression evaluated
+in the method.
 
 ## 3.4 Attributes and the attr_* method family ##
 
