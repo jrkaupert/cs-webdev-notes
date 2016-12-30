@@ -1,14 +1,15 @@
 // Simple way to attach js code to the canvas is by using a function
-function sketchProc(processing) {
-    var bodyX = 100;
-    var bodyY = 160;
+function animalAttack(processing) {
+    var bodyX = 200;
+    var bodyY = 260;
     var bodyW = 170;
     var bodyH = bodyW / 2;
     var faceX = bodyX;
     var faceY = bodyY - 70;
+    var counter = 0;
 
     processing.setup = function() {
-        processing.size(250, 250);
+        processing.size(400, 400);
     };
     // Override draw function, by default it will be called 60 times per second
     processing.draw = function() {
@@ -31,7 +32,7 @@ function sketchProc(processing) {
         processing.triangle(faceX + 20, faceY - 22, faceX + 60, faceY - 32, faceX + 35, faceY - 50);
 
         //eyes
-        processing.fill(0,0,0);
+        processing.fill(0, 0, 0);
         processing.ellipse(faceX - 10, faceY - 10, 5, 5);
         processing.ellipse(faceX + 10, faceY - 10, 5, 5);
 
@@ -54,7 +55,7 @@ function sketchProc(processing) {
         processing.curveVertex(startX + 40, startY - 20);
         processing.curveVertex(startX + 15, startY - 40);
         processing.curveVertex(startX + 58, startY - 60);
-        var endX = bodyX + 135;
+        var endX = bodyX + bodyW / 2 + 40;
         var endY = bodyY - 80;
         processing.curveVertex(endX, endY);
         processing.curveVertex(endX, endY);
@@ -62,11 +63,17 @@ function sketchProc(processing) {
 
         bodyW += 1;
         bodyH = bodyW / 2;
-
+        if (counter == 250) {
+            counter = 0;
+            bodyW = 170;
+            bodyH = bodyW / 2;
+        } else {
+            counter += 1;
+        }
     };
 };
-var myCanvas = document.getElementById("canvas1");
+var myCanvas1 = document.getElementById("canvas1");
 
-// attaching the sketchProc function to the canvas
-var p = new Processing(myCanvas, sketchProc);
+// attaching the animalAttack function to the canvas
+var p1 = new Processing(myCanvas1, animalAttack);
 // p.exit(); //to detach it
