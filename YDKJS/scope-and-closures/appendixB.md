@@ -31,7 +31,7 @@ be used to polyfill for block scope pre-ES6
 A transpiler should be used to handle this (rather than writing your own
 polyfill)
 
-The *Traceur* project handles transpiling ES6 features into pre-ES6.
+The *Traceur* project (Google) handles transpiling ES6 features into pre-ES6. Traceur actually produces something similar to the try/catch approach for `let`
 
 ## Implicit vs. Explicit Blocks ##
 An alternate form of `let` called the "let block" or "let statement":
@@ -58,7 +58,7 @@ such input.  Option:
 Why use `try/catch` instead of IIFE to create block scope?  `try/catch` is
 slower, but Chrome has been tasked to improve performance.  IIFE changes
 the actual meaning of the code contained, and therefore is not a suitable
-general solution to the issue
+general solution to the issue.
 
 [Table of Contents](_toc.md)
 
