@@ -151,6 +151,61 @@ by the **implict binding** rule, *that* object is what `this` binds to.
 In this case, `this.a` = `obj.a`.
 
 #### Implicitly Lost ####
+It often confuses people that the `this` binding created by an *implicitly 
+bound* function can lose its binding and revert to the *default binding*, 
+either on the global object or to `undefined` if `strict mode` is being used:
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var obj = {
+  a: 2,
+  foo: foo
+};
+
+var bar = obj.foo; // function reference / alias!
+
+var a = "oops, global"; // `a` is also a property on global object
+
+bar(); // "oops, global"
+```
+
+Above, while `bar` appears to be a reference to `obj.foo`, it is actually
+a reference to just `foo`.  Since the call-site is what matters, and `bar` is 
+the call-site here, the *default binding* rule applies.
+
+This can also happen with callback functions:
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+function doFoo(fn) {
+  // `fn` is just another reference to `foo`
+  fn(); // <-- Call site!
+}
+
+var obj = {
+  a: 2,
+  foo: foo
+};
+
+var a = "oops, global"; // `a` also a property on the global object
+doFoo( obj.foo ); // "oops, global"
+```
+
+Passing parameters is the same as an implicit reference assignment, so we get 
+the same result as the previous example.
+
+Often, function callbacks lose their `this` binding as in these examples, 
+however sometimes functions we've passed callbacks to intentionally change the
+`this`.  This often happens in popular JS libraries, where `this` points to the
+DOM element triggering an event.
+
+Sometimes, these problems can be solved by fixing the `this` that is used.
 
 ### Explicit Binding ###
 
