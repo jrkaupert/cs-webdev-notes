@@ -116,15 +116,17 @@ lexical scope.  An attempt is made to reference `bar()` via `this.bar()`.
 bridge is possible.
 
 ## What's `this`? ##
-`this` is not an author-time binding, but a runtime one instead.  Its context
-depends on how a function is invoked.  `this` binding has nothing to do with
-where a function is declared, only with how a function is called.
+`this` is not an author-time binding, but a runtime one instead.  
+
+Its context depends on how a function is invoked.  `this` binding has nothing 
+to do with where a function is declared, only with how a function is called.
 
 When a function is called, a new execution context is created.  This context
 contains info on where (in the call-stack) the function was called from,
-how it was called, what parameters were passed in, and more.  One of the
-properties of this context is the `this` reference that will be used for
-the duration of the function's execution.  A function's **call-site**
+how it was called, what parameters were passed in, and more.  
+
+One of the properties of this context is the `this` reference that will be 
+used for the duration of the function's execution.  A function's **call-site**
 determines the binding of `this`.
 
 [Table of Contents](_toc.md)
