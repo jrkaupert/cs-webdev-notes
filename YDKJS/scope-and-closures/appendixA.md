@@ -30,6 +30,22 @@ global variable `a` which has a value of two.
  If JS had dynamic scope, when `foo()` is executed, in theory the code above
  would output `3` instead
 
+ ```js
+function foo() {
+  console.log(a) // 3 (not 2)
+}
+
+function bar() {
+  var a = 3;
+  foo();  // if dynamically scoped, foo doesn't know about global scope's 
+          // var a = 2, so it searches the call stack for the most recent 
+          // declaration, which is var a = 3;
+}
+
+var a = 2;
+bar();
+ ```
+
  Why?
  - Instead of resolving a reference to `a` from the lexical scope chain, `foo`
  would search the call-stack to find where `foo` was called from.  
