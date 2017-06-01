@@ -99,4 +99,8 @@ var obj = {
 obj.cool(); // more awesome
 ```
 
+Learning how to use `this` and `bind()` together allows us to write this code
+with named functions rather than anonymous (as the arrow functions are 
+always anonymous)
+
 [Table of Contents](_toc.md)
