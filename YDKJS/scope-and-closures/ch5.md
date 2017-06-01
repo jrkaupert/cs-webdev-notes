@@ -5,9 +5,8 @@
 # Chapter 5: Scope Closures #
 
 ## Enlightenment ##
-Closure is all around in JavaScript, you just have to recognize and embrace it.
-It results from writing code that uses lexical scope.  You just need the
-proper mental context to recognize where to use them.
+Closure is everywhere in JavaScript, you just have to be on the lookout for it and be ready to use it.
+Writing code that uses lexical scope will naturally utilize closure.  You just need the proper mental context to recognize where to use them.
 
 The moment of enlightenment should occur when you realize that **closures are
 already all over the place in my code, I can now just *see* them**
@@ -120,7 +119,7 @@ for (var i=1; i<=5; i++) {
   setTimeout( function timer(){
     console.log( i );
   }, i*1000);
-}
+} // 6 gets printed 5 times
 ```
 
 The expectation is that this code would print the numbers 1 through 5, one
@@ -136,7 +135,7 @@ for (var i=1; i<=5; i++) {
       console.log( i );
     }, i*1000 );
   })();
-}
+} // 6 gets printed 5 times
 ```
 
 Unfortunately, this second example is no better.  Even though another lexical
@@ -152,7 +151,7 @@ for (var i=1; i<=5; i++) {
       console.log( j );
     }, j*1000 );
   })();
-}
+} // 1, 2, 3, 4, 5
 ```
 
 This version works with `j=i` making a copy of the loop variable each time
@@ -166,7 +165,7 @@ for (var i=1; i<=5; i++) {
       console.log( j );
     }, j*1000);
   })( i );
-}
+} // 1, 2, 3, 4, 5
 ```
 
 Using an IIFE created a new scope for each iteration which allowed the timeout
@@ -188,7 +187,7 @@ for (var i=1; i<=5; i++) {
 }
 ```
 
-Another, even cleaner way:
+Another, even cleaner way, which is exactly what we would intuitively expect without using any variable copies:
 
 ```js
 for (let i=1; i<=5; i++) {
