@@ -16,7 +16,7 @@ var a;
 
 console.log( a );
 ```
-In the above code, the output of the `console.log( a )` statement will be `2`
+In the above code, the output of the `console.log( a )` statement will be `8`
 because the variable `a` is *hoisted*
 
 In the code below, however, the behavior seems a little different (it's not):
@@ -61,10 +61,10 @@ console.log( a );
 a = 2;
 ```
 
-Essentially, via *hoisting*, variables and functions are pulled to the top of
+Essentially, via **hoisting**, variables and functions are pulled to the top of
 the code from where they actually appear.  Only declarations are hoisted.
 Any assignments or other executable logic that occurs at the point of
-declaration are left in place.  It would create a lot of problems otherwise...
+declaration are not moved.  It would create a lot of problems otherwise...
 
 Hoisting occurs **per-scope**, so variables in inside scopes are hoisted to
 the top of their scope.
