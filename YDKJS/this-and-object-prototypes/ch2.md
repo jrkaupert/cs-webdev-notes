@@ -7,9 +7,10 @@
 on its **call-site** (how a function is called)
 
 ## Call-site ##
-To understand how `this` is bound, the location (call-site) where a function
-is called (not where it is declared) needs to be understood.  Looking at
-the call-site answers the question of "What `this` is referenced here?".
+**call-site** = location where a function is called (not where it is declared)
+
+Call-site determines how `this` is bound. Looking at the call-site answers the 
+question of "What `this` is referenced here?".
 
 While it is typically a matter of going to where the function is called to
 understand the call-site, sometimes coding patterns can obscure the true
@@ -66,11 +67,14 @@ context object
 4. Default: `undefined` in `strict mode`, global object
 otherwise
 
+- Additional note: ES6 arrow functions use lexical scoping for `this`
+binding, meaning they adopt the `this` binding from the enclosing 
+function call.  Basically a syntactic substitute for `self = this`.
+
 ### Default Binding ###
-The first rule that will be examined (ignore the order from
-the previous section for now) looks at the most common case
-of a standalone function invocation.  This is the catch-all rule
-when none of the other rules apply.
+The first rule (ignore the order from the previous section for now) looks at 
+the most common case of a standalone function invocation.  This is the 
+catch-all rule when none of the other rules apply.
 
 ```js
 function foo() {
@@ -117,6 +121,34 @@ this can become a relevant issue if third-party libraries are
 used with different settings than the code they are called from.
 
 ### Implicit Binding ###
+Another rule: does the call-site have a context object (aka: an owning
+or containing object)?
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var obj = {
+  a: 2,
+  foo: foo
+};
+
+obj.foo(); //2
+```
+
+Here, `foo()` is declared, then added as a reference property onto `obj`. 
+Whether `foo()` is declared on `obj` initially or as in this example, the
+function is not really 'owned' or 'contained' by the `obj` object.
+
+Despite this, the call-site uses the `obj` context to reference the function, 
+so in this sense, the `obj` object 'owns' or 'contains' the 
+**function reference** when the function is called.
+
+When `foo()` is called, it is preceded by an object reference to `obj`, so
+by the **implict binding** rule, *that* object is what `this` binds to.
+
+In this case, `this.a` = `obj.a`.
 
 #### Implicitly Lost ####
 
