@@ -51,12 +51,12 @@ are not properly hidden
 in an object, with access occurring via properties:
 
 ```js
-var MyReallyCoolLibrary = {
-  awesome: "stuff",
-  doSomething: function() {
+var SomeLibrary = {
+  things: "stuff",
+  doAction: function() {
     // ...
   }
-  doAnotherThing: function() {
+  doAnotherAction: function() {
     // ...
   }
 };
@@ -66,8 +66,8 @@ var MyReallyCoolLibrary = {
 - An additional approach to collision avoidance is the *module* approach, which
 uses dependency managers to prevent identifiers from being explicitly imported
 into a new scope
-- These tools use lexical scoping rules to ensure no identifiers are injected
-into shared scope
+- These tools use lexical scoping rules to ensure no identifiers make it
+into any of the shared scopes present in the code
 - Chapter 5 of this book includes more info on the module pattern
 
 ## Functions as Scopes ##
@@ -79,14 +79,14 @@ and to automatically execute functions
 
 Example:
 ```js
-var a = 2;
+var a = 6;
 
-(function foo() {
-  var a = 3;
-  console.log( a ); // 3
+(function bar(){
+  var a = 5;
+  console.log( a ); // 5
 })();
 
-console.log( a ); // 2
+console.log( a ); // 6
 ```
 
 - By wrapping the function statement in parentheses, the function is no
@@ -100,15 +100,15 @@ scope and is instead bound only inside of its own function, preventing the name
 from polluting the enclosing scope
 
 ### Anonymous vs. Named ###
-- Function expressions can be anonymous, where `function(..)` is called with
+- **Function expressions** can be anonymous, where `function(..)` is called with
 no name identifier
-- Function declarations must have a name
+- **Function declarations**, on the other hand, must have a name
 - Anonymous functions are commonly used, but have several drawbacks:
   - No useful name for stack trace debugging
-  - With no name, recusion requires the use of a now-deprecated `arguments.callee` reference
+  - With no name, recursion requires the use of a now-deprecated `arguments.callee` reference
   - No useful name makes code less readable/understandable.  Descriptive names
   help self-document
-- *Inline function expressions* are very useful. Adding a name to them fixes
+- **Inline function expressions** are very useful. Adding a name to them fixes
 all of the drawbacks of anonymous functions while keeping all the benefits:
 
 ```js
@@ -184,30 +184,30 @@ the scope of the block it occurs in
 
 Example:
 ```js
-var foo = true;
+var a = true;
 
-if (foo) {
-  let bar = foo * 2;
-  bar = something( bar );
-  console.log( bar );
+if (a) {
+  let b = a * 2;
+  b = something( b );
+  console.log( b );
 }
-console.log ( bar ); //ReferenceError
+console.log ( b ); //ReferenceError
 ```
 
 - In order to explicitly show block-scoping with `let`, can also use the following form with an arbitrary block of `{..}` braces
 - Code below is equivalent to the above
 
 ```js
-var foo = true;
+var a = true;
 
-if (foo) {
+if (a) {
   { // <-- explicit block
-    let bar = foo * 2;
-    bar = something( bar );
-    console.log( bar );
+    let b = a * 2;
+    b = something( b );
+    console.log( b );
   }
 }
-console.log( bar ); // ReferenceError
+console.log( b ); // ReferenceError
 ```
 
 - Declarations using `let` do not hoist to the entire scope of the block
@@ -215,8 +215,8 @@ they appear in:
 
 ```js
 {
-  console.log( bar ); // ReferenceError!
-  let bar = 2;
+  console.log( b ); // ReferenceError!
+  let b = 2;
 }
 
 ```
@@ -242,7 +242,7 @@ btn.addEventListener("click", function click(evt){
 
 In the above example, the `click` function handler callback does not use or
 need the `someReallyBigData` variable, but most likely the JS engine will
-not garbage collect it because `click` has a closer over the whole scope
+not garbage collect it because `click` has a closure over the whole scope
 
 ```js
 function process(data) {
@@ -287,7 +287,7 @@ if (foo) {
   const b = 3; // block-scoped to containing `if`
 
   a = 3; // just fine!
-  b = 4; // error!
+  b = 4; // error (already defined)!
 }
 
 console.log( a ); // 3
