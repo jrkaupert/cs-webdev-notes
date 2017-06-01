@@ -10,13 +10,14 @@
 Example:
 ```js
 function foo(a) {
-  var b = 2;
+  // a is only accessible inside of foo
+  var b = 4; // b is only accessible inside of foo as well!
 
   function bar() {
-    // ...
+    // bar is only accessible inside of foo
   }
 
-  var c = 3;
+  var c = 7; // c is only accessible inside of foo
 }
 ```
 
@@ -34,7 +35,7 @@ existing code and wrapping it in a function declaration, which essentially
 *hides* the code in its own scope bubble
 - Hiding variables and functions is useful because of the "Principle of Least
 Privilege" in software design.  You should only expose what is minimally
-necessary to the outside world and *hide* everything else
+necessary to the outside world and *hide* the rest
 - Design should keep private details private to avoid unintended side-effects from outside influence
 
 ### Collision Avoidance ###

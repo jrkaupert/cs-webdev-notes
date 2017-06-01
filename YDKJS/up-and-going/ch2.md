@@ -172,17 +172,17 @@ used)
 - Example:
 
 ```javascript
-var a = 2;
+var x = 5;
 
 foo();      // works because foo() declaration is hoisted
 
 function foo() {
-  a = 3;
+  x = 24;
 
-  console.log(a);   // 3
-  var a;            // declaration is hoisted to top of foo()
+  console.log(x);   // 24
+  var x;            // declaration is hoisted to top of foo()
 }
-console.log(a);     // 2
+console.log(x);     // 5
 ```
 - Should not rely on hoisting variables to use earlier in scope than `var`
 appears
