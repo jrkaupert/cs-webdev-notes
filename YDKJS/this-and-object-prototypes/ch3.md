@@ -45,6 +45,54 @@ Special object sub-types:
 - arrays
 
 ### Built-in Objects ###
+Several other object sub-types exist, known as **built-in objects**:
+- `String`
+- `Number`
+- `Boolean`
+- `Object`
+- `Function`
+- `Array`
+- `Date`
+- `RegExp`
+- `Error`
+
+In JS, these are built-in functions, and can be used as a constructor, able
+to produce a new *constructed* object of the desired sub-type
+
+```js
+var strPrimitive = "I am a string";
+typeof strPrimitive; // "string"
+strPrimitive instanceof String; // false
+
+var strObject = new String( "I am a string" );
+typeof strObject; // "object"
+strObject instanceof String; // true
+
+// inspect the object subtype
+Object.prototype.toString.call( strObject ); // [object String]
+```
+
+Calling `toString()` lets us see that `strObject` is an object that was created
+by the `String` constructor
+
+Primitive string values are not objects, instead are literals, and are 
+immutable.  A `String` object is required to check length, access single 
+characters, etc...The same logic applies for other primitives such as numbers
+and booleans
+
+JS coerces `"string"` primitives to `String` objects as required
+
+`null` and `undefined` only exist as primitives (no object wrapper form)
+
+`Date` values must be created with constructed object form, as there are no
+corresponding literals
+
+`Object`, `Array`, `Function`, and `RegExp` are all objects whether the literal
+or constructed form is used, but usually the simpler literal form is used
+unless additional options are required
+
+`Error` objects are typically not created explicitly, instead happening 
+automatically when exceptions are thrown
 
 ## Contents ##
 
