@@ -331,6 +331,63 @@ on an object.  If so:
 3. Otherwise, set the value to the existing property as normal
 
 ### Getters & Setters ###
+Defining a property to have either/both a getter/setter, its definition becomes
+an 'accessor descriptor'.  `value` and `writable` characteristics then become
+ignored.
+
+```js
+var myObject = {
+  get a() {
+    return 2;
+  }
+};
+
+Object.defineProperty(
+  myObject, //target
+  "b",      //property name
+  {
+    //define getter for 'b'
+    get: function() {return this.a * 2 },
+
+    // make sure 'b' shows up as an object property
+    enumerable: true
+  }
+);
+
+myObject.a; // 2
+myObject.b; // 4
+```
+
+If a getter is defined, but no setter, any attempt to set that property will
+silently fail:
+
+```js
+var myObject = {
+  get a() {
+    return 2;
+  }
+};
+
+myObject.a = 3; // attempt to set 'a' to 3
+myObject.a;  // retains value of 2 because no setter exists, but getter does
+```
+
+Instead, a setter should also be defined:
+
+```js
+var myObject = {
+  get a() {
+    return this._a_;
+  },
+
+  set a(val) {
+    this._a_ = val * 2;
+  }
+};
+
+myObject.a = 2;
+myObject.a; //4
+```
 
 ### Existence ###
 
