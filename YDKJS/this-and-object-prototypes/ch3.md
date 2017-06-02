@@ -256,14 +256,63 @@ properties default to `enumerable`, but can be set to `enumerable: false` if
 there's a specific reason to.
 
 ### Immutability ###
+ES5 added a series of ways to make properties and objects that cannot be
+changed.  All of these methods create shallow immutability, such that they
+do not affect references to other objects (those object's contents)
+
+```js
+myImmutableObject.foo; // [1, 2, 3]
+myImmutableObject.foo.push(4);
+myImmutableObject.foo; // [1, 2, 3, 4]
+```
+
+In the above example, `myImmutableObject` is considered as immutable.  To 
+protect the contents of `myImmutableObject.foo`, however, `foo` would also have to be made immutable
 
 #### Object Constant ####
+Object properties can be made constants if `writable:false` and 
+`configurable:false` are used together
+
+```js
+var myObject = {};
+
+Object.defineProperty( myObject, "FAVORITE_NUMBER", {
+  value: 42,
+  writable: false,
+  configurable: false
+})
+```
 
 #### Prevent Extensions ####
+`Object.preventExtensions(..)` prevents new properties from being added to
+an object without affecting existing ones:
+
+```js
+var myObject = {
+  a: 2
+};
+
+Object.preventExtensions( myObject );
+
+myObject.b = 3;
+myObject.b; // undefined
+```
+
+In `strict mode` trying to add a new property in this case would throw a 
+`TypeError`, while it would fail silently otherwise
 
 #### Seal ####
+`Object.seal(..)` does the same thing as `Object.preventExtensions(..)` but 
+also marks existing properties as `configurable: false`.  Properties cannot
+be added, nor can existing properties be reconfigured or deleted, but existing
+properties may still have their values changed
 
 #### Freeze ####
+`Object.freeze(..)` does the same thing as `Object.seal(..)` but also makes all
+existing properties as `writable: false` so values cannot be changed either.
+
+This is the most immutability that can be achieved for objects, as the object
+nor its direct properties (not references to other objects) can be changed
 
 ### [[Get]] ###
 
