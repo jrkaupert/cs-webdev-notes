@@ -356,6 +356,19 @@ obj2.foo.call( obj1 ); // 2 (Explicit took precedence)
 hard binding is used.
 
 ### Determining `this` ###
+Rules, in order:
+1. `new` binding - Are we calling the function with `new`? If so, `this` refers to the newly
+constructed object:
+`var bar = new foo()`
+2. **Explicit Binding** - Are we calling the function with `call`, `apply`, or `bind`? If so, `this`
+is the explicitly specified object:
+`var bar = foo.call(obj2)`
+3. **Implicit Binding** - Are we calling the function with a specified context (owning or containing
+object)? If so, `this` is the context object:
+`var bar = obj1.foo()`
+4. **Default Binding** - Otherwise, `this` is `undefined` in `strict mode` or the `global` object
+otherwise
+`var bar = foo()`
 
 ## Binding Exceptions ##
 
