@@ -133,6 +133,13 @@ var myObject = {
 ```
 
 ### Property vs. Method ###
+Accessing properties of an object is always a **property access**, even if
+it happens to get back a function (not a **method** even though the 
+specification makes that type of distinction as with other languages).  Since
+`this` is dependent on call-site, such a function is not strictly bound to
+that object.
+
+The words "function" and "method" are interchangeable in JavaScript
 
 ### Arrays ###
 
