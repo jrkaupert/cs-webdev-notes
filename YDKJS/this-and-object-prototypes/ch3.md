@@ -167,6 +167,21 @@ myArray[3]; // "baz"
 ```
 
 ### Duplicating Objects ###
+JS does not have a built-in `copy()` method to duplicate objects.
+
+JS frameworks have picked various means of performing a copy operations.
+
+Objects that are JSON-safe (can be serialized to a JSON string, then re-parsed
+to the same object) can be duplicated with:
+
+```js
+var newObj = JSON.parse( JSON.stringify( someObj ) );
+```
+
+ES6 also allows shallow copying via `Object.assign(..)`, which takes a 
+target object and one or more source objects, then iterates over immediate 
+enumerable (owned) keys on the source objects and copies via assignment to the
+target, as well as returning the target.
 
 ### Property Descriptors ###
 
