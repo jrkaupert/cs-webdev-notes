@@ -315,6 +315,13 @@ This is the most immutability that can be achieved for objects, as the object
 nor its direct properties (not references to other objects) can be changed
 
 ### [[Get]] ###
+When a property access occurs, a `[[Get]]` operation is performed, first
+looking at the object to see if it has such a property, and returning it if
+found.  If after traversing the `[[Prototype]]` chain it cannot find a value
+for the property, it returns `undefined`.
+
+In contrast, variable lookups that cannot be resolved within lexical scoping
+will instead thrown a `ReferenceError` instead of returning `undefined`
 
 ### [[Put]] ###
 
