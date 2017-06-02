@@ -296,6 +296,30 @@ var obj = {
 In the background, some sort of explicit binding using `call(..)` or `apply(..)` is likely happening
 
 ### `new` Binding ###
+In JS, the `new` operator looks similar to that of class-oriented languages,
+but this is not actually the same.  In JS, **constructors** are functions that
+happen to be called with `new` in front of them.  They do not instantiate 
+classes, nor are they special types of functions.
+
+Almost any function can be called with `new` preceding it, making it a 
+**constructor call**, which does the following:
+1. Creates a new object
+2. Links the object via prototype
+3. Sets the new constructed object as the `this` binding for that function 
+call
+4. Automatically returns the `new`-invoked function unless the function
+returns a different object already
+
+Calling a function with `new` in front of it sets that object as the `this`
+
+```js
+function foo(a) {
+  this.a = a;
+}
+
+var bar = new foo( 2 );
+console.log( bar.a ); // 2
+```
 
 ## Everything in Order ##
 
