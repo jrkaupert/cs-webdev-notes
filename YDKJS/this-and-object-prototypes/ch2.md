@@ -208,8 +208,72 @@ DOM element triggering an event.
 Sometimes, these problems can be solved by fixing the `this` that is used.
 
 ### Explicit Binding ###
+It is also possible to force function calls to use a particular object for 
+their `this` binding without putting a property function reference on an
+object.
+
+Functions have access to `call(..)` and `apply(..)` methods via their 
+prototypes that take as their first parameter an object that should be used
+as `this`, then invoking the function using that `this` value. 
+
+This is **explicit binding**.
+
+Example:
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var obj = {
+  a: 2
+};
+
+foo.call( obj ); //2
+```
+
+In the above example, `foo` is invoked with explicit binding using 
+`foo.call(..)` so that `this` is bound to `obj`
+
+When simple primitives (`string`, `boolean`, or `number`) are passed as the
+`this` binding, the primitive gets wrapped in its object form (`new String(..)`
+, `new Boolean(..)`, or `new Number(..)`), which is known as **boxing**
+
+As far as `this` binding is concerned, `call(..)` and `apply(..)` are 
+functionally the same.
 
 #### Hard Binding ####
+While **explicit binding** alone doesn't solve the problem of a function losing
+its intended `this` binding, **hard binding** provides a solution:
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var obj = {
+  a: 2
+};
+
+var bar = function() {
+  foo.call( obj );
+};
+
+bar(); // 2
+setTimeout(bar, 100); //2
+
+// `bar` hard binds `foo`'s `this` to `obj`
+// so that it cannot be overriden
+bar.call( window ); //2
+```
+
+In this case, `bar()` invokes `foo` with `this` bound to `obj` by calling 
+`foo.call(obj)`.  Regardless of how `bar` is later invoked, it will always
+invoke `foo` with `obj`, thus it is called **hard binding**
+
+Since ES5, it is possible to use `bind` to return a new function that is
+hard-coded to call the original function with a specified `this` context. In
+ES6, this also produces a `.name` property derived from the original target
+function.
 
 #### API Call "Contexts" ####
 
