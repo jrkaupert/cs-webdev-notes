@@ -412,6 +412,56 @@ on an object and is also set to `enumerable:true`
 enumerability in an array.  Both inspect only the direct object, not prototypes
 
 ## Iteration ##
+In addition to `for` and `for..in`, ES5 added several iteration options for 
+arrays, each of which allows a function callback to apply to each element in
+the array.
+
+`forEach(..)` iterates over all array values, ignoring any callback return 
+values
+
+`every(..)` iterates until the end of the array, or until a callback returns
+`false` or another falsy value
+
+`some(..)` iterates until the end of the array, or until a callback returns 
+`true` or another truthy value
+
+`every(..)` and `some(..)` therefore can use callbacks as a sort of `break` 
+statement
+
+ES6 also adds a `for..of` loop to iterate over values directly:
+
+```js
+var myArray = [ 1, 2, 3 ]
+for (var v of myArray) {
+  console.log(v);
+}
+// 1
+// 2
+// 3
+```
+
+The `for..of` loop uses an iterator object and loops over successive return 
+values using `next()` once per loop iteration.  Arrays have a built-in 
+`@@iterator` so can use `for..of` natively.  To manually iterate over an array:
+
+```js
+var myArray = [ 1, 2, 3 ]
+var it = myArray[Symbol.iterator]();
+
+it.next(); // {value: 1, done: false}
+it.next(); // {value: 2, done: false}
+it.next(); // {value: 3, done: false}
+it.next(); // {done: true}
+```
+
+The `@@iterator` internal property is accessible through `Symbol.iterator`.
+
+The return value of an iterator's `next()` is given as `{ value:..., done:...}`
+and does not return `done:true` until after the last value has been iterated
+over.
+
+Regular objects do not have a built-in `@@iterator` and must have it defined
+if desired
 
 [Table of Contents](_toc.md)
 
