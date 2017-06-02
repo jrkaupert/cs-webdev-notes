@@ -390,8 +390,26 @@ myObject.a; //4
 ```
 
 ### Existence ###
+The `hasOwnProperty(..)` function can be used to check if an object has a 
+property without asking for it.  This will fail if an object was created using
+`Object.create(null)` such that the object does not link to `Object.prototype`
+
+The `in` operator checks if the object or anything higher in the 
+`[[Prototype]]` chain has the property.  Note that `in` checks for properties,
+not values, and should not be used to check if values exist in an array
 
 #### Enumeration ####
+**enumerable** = will be included if object's properties are iterated through
+
+`for..in` loops should not be used with arrays, as they will include all 
+numeric indices as well as enumerable properties.  Use `for` instead
+
+`propertyIsEnumerable(..)` can be used to see if a property exists directly
+on an object and is also set to `enumerable:true`
+
+`Object.keys(..)` returns all enumerable properties in an array, versus
+`Object.getOwnPropertyNames(..)` returns all properties regardless of their
+enumerability in an array.  Both inspect only the direct object, not prototypes
 
 ## Iteration ##
 
