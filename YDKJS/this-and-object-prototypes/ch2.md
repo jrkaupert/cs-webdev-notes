@@ -447,6 +447,36 @@ o.foo(); // 3
 ```
 
 ### Softening Binding ###
+As an alternative to **hard-binding**, a **soft-binding** can be used to 
+provide a different default to **default binding** while still allowing
+a function to be manually bound to `this` via **implicit** or **explicit**
+binding
+
+```js
+if (!Function.prototype.softBind) {
+  Function.prototype.softBind = function(obj) {
+    var fn = this,
+             curried = [].slice.call( arguments, 1 ),
+             bound = function bound() {
+               return fn.apply(
+                 (!this ||
+                          (typeof window !== "undefined" && 
+                                  this === window) ||
+                          (typeof global !== "undefined" && 
+                                  this === global)
+                 ) ? obj : this,
+                 curried.concat.apply( curried, arguments )
+               );
+             };
+      bound.prototype = Object.create( fn.prototype );
+      return bound;
+  };
+}
+```
+
+This utility works similarly to `bind(..)`, but checks `this` at call-time
+and if `global` or `undefined`, uses an alternative that gets passed in as 
+`obj`, otherwise leaving `this` alone.  Optional currying is also provided.
 
 ## Lexical `this` ##
 
