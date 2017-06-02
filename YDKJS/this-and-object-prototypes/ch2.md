@@ -322,6 +322,38 @@ console.log( bar.a ); // 2
 ```
 
 ## Everything in Order ##
+The 4 rules for binding have an order of precedence.
+
+**Default Binding** is the lowest precedence.
+
+What about **Implicit Binding** versus **Explicit Binding**?
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var obj1 = {
+  a: 2,
+  foo: foo
+};
+
+var obj2 = {
+  a: 3,
+  foo: foo
+};
+
+obj1.foo(); // 2
+obj2.foo(); // 3
+
+obj1.foo.call( obj2 ); // 3 (Explicit took precedence)
+obj2.foo.call( obj1 ); // 2 (Explicit took precedence)
+```
+
+**Explicit** takes precedence over **Implicit**
+
+**`new` binding** takes precedence over **Explicit Binding**, even when
+hard binding is used.
 
 ### Determining `this` ###
 
