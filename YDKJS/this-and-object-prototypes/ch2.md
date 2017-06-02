@@ -371,8 +371,41 @@ otherwise
 `var bar = foo()`
 
 ## Binding Exceptions ##
+But of course there are some exceptions...
 
 ### Ignored `this` ###
+The **default binding** rule gets applied if `null` or `undefined` are passed
+to `call`, `apply`, or `bind` as a parameter.
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var a = 2;
+foo.call( null ); // 2
+```
+
+Some reasons to intentionally pass `null` for a `this` binding are spreading
+out array values as function call parameters and for currying:
+
+```js
+function foo(a, b) {
+  console.log( "a:" + a + ", b:" + b);
+}
+
+// spreading out array as parameters
+foo.apply( null, [2, 3] ); // a:2, b:3
+
+// currying with `bind(..)`
+var bar = foo.bind( null, 2 );
+bar( 3 ); // a:2, b:3
+```
+
+While `null` can be used when a function doesn't care about the `this` binding
+as in the above examples, there's a 'hidden danger' that a 3rd-party library
+being used might a `this` reference and use the **default binding** instead,
+making it difficult to track down bugs
 
 #### Safer `this` ####
 
