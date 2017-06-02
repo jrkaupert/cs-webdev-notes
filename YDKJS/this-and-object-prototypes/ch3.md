@@ -324,6 +324,11 @@ In contrast, variable lookups that cannot be resolved within lexical scoping
 will instead thrown a `ReferenceError` instead of returning `undefined`
 
 ### [[Put]] ###
+The behavior of `[[Put]]` depends on whether or not the property already exists
+on an object.  If so:
+1. If the property is an accessor descriptor, call the setter, if any
+2. If the property is a data descriptor with `writable: false`, throw `TypeError` or silently fail depending on `strict mode`
+3. Otherwise, set the value to the existing property as normal
 
 ### Getters & Setters ###
 
