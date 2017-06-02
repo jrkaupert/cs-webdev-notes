@@ -95,8 +95,42 @@ unless additional options are required
 automatically when exceptions are thrown
 
 ## Contents ##
+Object contents are values of any type, stored at named *locations* called
+**properties**
+
+Property names act as **references** to where values are stored
+
+Properties can be accessed using either the `.` operator ("property access")
+or `[ ]` operator ("key access").
+
+Object property names are **ALWAYS** strings, and JS will convert non-string
+primitives to strings (including numbers, which are numbers for arrays, but
+get converted to strings for object keys)
 
 ### Computed Property Names ###
+In ES6, computed property names can be specified with an expression
+surrounded by a `[ ]` pair in an object-literal declaration:
+
+```js
+var prefix = "foo";
+
+var myObject = {
+  [prefix + "bar"]: "hello",
+  [prefix + "baz"]: "world"
+};
+
+myObject["foobar"]; //hello
+myObject["foobaz"]; //world
+```
+
+Computed property names will most commonly be used for ES6 `Symbol`s which are 
+a new primitive data type:
+
+```js
+var myObject = {
+  [Symbol.Something]: "hello world"
+}
+```
 
 ### Property vs. Method ###
 
