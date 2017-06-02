@@ -479,6 +479,32 @@ and if `global` or `undefined`, uses an alternative that gets passed in as
 `obj`, otherwise leaving `this` alone.  Optional currying is also provided.
 
 ## Lexical `this` ##
+Arrow functions from ES6 use the `this` binding from their enclosing scope
+instead of the 4 rules of `this`:
+
+```js 
+function foo() {
+  // return an arrow function
+  return (a) => {
+    // `this` here is lexically adopted from `foo()`
+    console.log( this.a );
+  };
+}
+
+var obj1 = {
+  a: 2
+};
+
+var obj2 = {
+  a: 3
+};
+
+var bar = foo.call( obj1 );
+bar.call( obj2 ); // 2, not 3!
+```
+
+In the above example, the arrow-function in `foo()` captures its `this` when
+called.  It cannot be overridden, even with `new`.
 
 [Table of Contents](_toc.md)
 
