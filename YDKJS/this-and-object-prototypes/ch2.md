@@ -429,6 +429,22 @@ By using `Object.create(null)`, there is no delegation to `Object.prototype`
 as there would be if `{ }` were used instead.
 
 ### Indirection ###
+When indirect references to functions are created, the **default binding**
+rule also applies when those functions are invoked.  This most often occurs
+during assignment:
+
+```js
+function foo() {
+  console.log( this.a );
+}
+
+var a = 2;
+var o = { a: 3, foo: foo };
+var p = { a: 4 };
+
+o.foo(); // 3
+(p.foo = o.foo)(); // 2
+```
 
 ### Softening Binding ###
 
