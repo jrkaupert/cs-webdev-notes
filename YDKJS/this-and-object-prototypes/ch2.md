@@ -408,6 +408,25 @@ being used might a `this` reference and use the **default binding** instead,
 making it difficult to track down bugs
 
 #### Safer `this` ####
+A slightly safer alternative to passing `null` is to set up a specific object
+instead:
+
+```js
+function foo(a,b) {
+  console.log( "a:" + a + ", b:" + b );
+}
+var ø = Object.create( null );
+
+// spreading out array as parameters
+foo.apply( ø, [2, 3] ); // a:2, b:3
+
+// currying with `bind(..)`
+var bar = foo.bind( ø, 2 );
+bar( 3 ); // a:2, b:3
+```
+
+By using `Object.create(null)`, there is no delegation to `Object.prototype`
+as there would be if `{ }` were used instead.
 
 ### Indirection ###
 
