@@ -142,6 +142,29 @@ that object.
 The words "function" and "method" are interchangeable in JavaScript
 
 ### Arrays ###
+Arrays also use `[ ]` accessing, but use numeric indexing.
+
+Since arrays are objects, although its indices are positive integers, it
+can also have properties added:
+
+```js
+var myArray = [ "foo", 42, "bar" ];
+myArray.baz = "baz";
+myArray.length; //3
+myArray.baz; // "baz"
+```
+
+Adding named properties does not change the length of the array.
+
+If a property is added to an array that looks like a number, it will become
+an index and modify the array contents:
+
+```js
+var myArray = [ "foo", 42, "bar" ];
+myArray["3"] = "baz";
+myArray.length; // 4
+myArray[3]; // "baz"
+```
 
 ### Duplicating Objects ###
 
