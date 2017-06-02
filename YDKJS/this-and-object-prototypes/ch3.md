@@ -184,12 +184,76 @@ enumerable (owned) keys on the source objects and copies via assignment to the
 target, as well as returning the target.
 
 ### Property Descriptors ###
+As of ES5, all properties have a **property descriptor**:
+
+```js
+var myObject = {
+  a: 2
+}
+
+Object.getOwnPropertyDescriptor( myObject, "a" );
+// {
+//    value: 2,
+//    writable: true,
+//    enumerable: true,
+//    configurable: true
+// }
+```
+
+New properties can also be added or modified using `Object.defineProperty(..)`
+(modifying only allowed if its `configurable`)
+
+```js
+var myObject = {};
+
+Object.defineProperty( myObject, "a", {
+  value: 2,
+  writable: true,
+  configurable: true,
+  enumerable: true
+} );
+myObject.a; //2
+```
 
 #### Writable ####
+Properties can only be changed if they are `writable`.  Trying to modify
+properties when not writable will cause silent failures when `strict mode`
+is not used, and will fail with a `TypeError` when `strict mode` is used.
 
 #### Configurable ####
+Configurable properties can have their descriptions modified using 
+`defineProperty(..)`.  If `configurable` is set to `false`, however, new
+`defineProperty(..)` calls will fail with a `TypeError` regardless of 
+`strict mode`
+
+When `configurable: false` is present, `delete` may not be used to remove
+existing properties:
+
+```js
+var myObject = {
+  a: 2
+};
+
+myObject.a; //2
+delete myObject.a;
+myObject.a; // undefined
+
+Object.defineProperty( myObject, "a", {
+  value: 2,
+  writable: true,
+  configurable: false,
+  enumerable: true
+});
+myObject.a; // 2
+delete myObject.a;
+myObject.a/ // 2
+```
 
 #### Enumerable ####
+The **enumerable** descriptor characteristic allows properties to show up in
+certain enumerations such as the `for..in` loop.  All normal user-defined
+properties default to `enumerable`, but can be set to `enumerable: false` if
+there's a specific reason to.
 
 ### Immutability ###
 
