@@ -276,6 +276,24 @@ ES6, this also produces a `.name` property derived from the original target
 function.
 
 #### API Call "Contexts" ####
+In many libraries as well as new built-ins for JS, an optional parameter 
+called 'context' is often provided so that `bind(..)` does not have to be
+used and to ensure that callback functions use a specified `this`:
+
+```js
+function foo(el) {
+  console.log( el, this.id );
+}
+
+var obj = {
+  id: 'awesome'
+};
+
+// use `obj` as `this` for `foo(..)` calls
+[1, 2, 3].forEach(foo,obj); // 1 awesome 2 awesome 3 awesome
+```
+
+In the background, some sort of explicit binding using `call(..)` or `apply(..)` is likely happening
 
 ### `new` Binding ###
 
