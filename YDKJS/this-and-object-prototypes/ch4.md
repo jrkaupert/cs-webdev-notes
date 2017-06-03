@@ -56,10 +56,41 @@ Usually constructors get called with `new` in whatever language to let the
 engine know that we want to construct a new class instance
 
 ## Class Inheritance ##
+In OOP, you can also define classes that inherit from other classes.  Child
+classes are separate and distinct from parent classes, and can override any
+behavior they inherit from parents.
 
 ### Polymorphism ###
+Polymorphism is the idea that any method can reference other methods of the
+same or different name of objects higher up the inheritance chain.  "Relative"
+polymorphism implies we just look **up** the chain, and don't worry about 
+specifying a specific class to reference the method from.
+
+Many languages use the keyword `super` to designate that a method will look
+up the inheritance chain for behavior.  In normal OOP languages, this lets the
+constructor of a child class reference the constructor of its parent class.
+
+In JS, parent-child relationships only exist between the .prototype objects of
+the constructors, meaning the constructors are not directly related and there's
+no easy way to reference one another (Though ES6 `class` provides something
+here via `super`)
+
+When classes are inherited, the classes can relatively reference the class
+they inherit from, where this reference is usually called `super`.  Note that
+any overridden behavior does not actually override the original method on the
+parent, so both versions are accessible.  
+
+Child classes are not linked to parent classes.  Instead, child classes get
+copies of what they need from parent classes.
+
+**Class inheritance implies copies**
 
 ### Multiple Inheritance ###
+Some languages allow classes to inherit from more than one parent class, such
+that each parent's definition gets copied to the child.
+
+JavaScript does not provide multiple inheritance mechanisms, which in the end
+makes things a bit simpler.  Despite this, many developers try to fake it.
 
 ## Mixins ##
 
