@@ -34,11 +34,26 @@ With lots of effort, you can implement classes as a design pattern in JS.
 Despite this, classes in JS are not the same as classes in other languages.
 
 ## Class Mechanics ##
-
+In many OOP languages, while certain data structures exist as part of the
+standard library, they must first be instantiated from the class before they
+can be used to do anything.
 
 ### Building ###
+The normal metaphor for classes and instances comes from building construction:
+Architectural blueprints provide the plan for the building but AREN'T the 
+building.  Blueprints = the class, the Building = the instantiation which
+creates an instance of something that resembles the blueprint
+
+Classes are instantiated into objects using a copy operation
 
 ### Constructor ###
+Class instances are typically made using a special method of the class that
+tends to share the class name, called a **constructor**.  This method creates
+an instance of the object and gives it any needed information (state).
+
+The constructor belongs to the class, and almost always shares that name. 
+Usually constructors get called with `new` in whatever language to let the
+engine know that we want to construct a new class instance
 
 ## Class Inheritance ##
 
