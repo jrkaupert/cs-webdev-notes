@@ -282,10 +282,59 @@ engine looks up to the next linked object, continuing to each new `[[Prototype]]
 until the property/method is found or the prototype chain ends.
 
 ### `Create()`ing Links ###
+So why bother with the prototype mechanism at all?
+
+By using `Object.create(..)`, we can link objects, letting us delegate things
+from other objects, without the complications of using `new`, `.prototype`, or
+`.constructor`.  This lets us create meaningful relationships between objects,
+without the use of classes.  All we care about is the ability to delegate.
+
+```js
+var foo = {
+  something: function() {
+    console.log( "Tell me something good..." );
+  }
+};
+
+// linking bar and foo, delegating .something
+var bar = Object.create( foo );
+bar.something(); // Tell me something good...
+```
+
+As a note, `Object.create(null)` creates an object with no `[[Prototype]]` 
+linkage.  Such objects can be used as "dictionaries" because there are no 
+possible unintended side-effects from delegated functions or properties, and thus
+are often used to store data.
 
 #### `Object.create()` Polyfilled ####
+Since `Object.create()` was not added until ES5, it may need to be polyfilled
+for pre-ES5 environments.
 
 ### Links as Fallbacks? ###
+Prototypes should not be used as "fallbacks" for missing properties or methods.
+API design looks like "magic" if prototypes are used as fallbacks.  To reduce
+this magic:
+
+```js
+var anotherObject = {
+  cool: function() {
+    console.log( "cool!" );
+  }
+};
+
+var myObject = Object.create( anotherObject );
+
+myObject.doCool = function() {
+  this.cool(); // internal delegation
+};
+
+myObject.doCool(); // "cool!"
+```
+
+The above example uses a method on `myObject` that actually exists, that when 
+called delegates to another object in the prototype chain.  This explicit
+delegation is called the **delegation design pattern**, and makes it less
+surprising as to what the API is doing.
 
 [Table of Contents](_toc.md)
 
