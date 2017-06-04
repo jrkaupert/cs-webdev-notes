@@ -274,9 +274,12 @@ Object.getPrototypeOf( a );
 a.__proto__; // exists on Object.prototype, not on `a`
 ```
 
-
-
 ## Object Links ##
+`[[Prototype]]` is an internal link on one object that references another.  The
+link is used most often when a property or method is referenced against the 
+first object but no such property or method is available.  At this point, the 
+engine looks up to the next linked object, continuing to each new `[[Prototype]]`
+until the property/method is found or the prototype chain ends.
 
 ### `Create()`ing Links ###
 
