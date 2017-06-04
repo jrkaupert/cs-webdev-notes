@@ -136,12 +136,173 @@ In this version, the same prototype delegation from `b1` to `Bar` to `Foo` is us
 `new` calls are a lot of extra stuff to force the OOP design pattern onto JS code.
 
 ## Classes vs. Objects ##
+Some more concrete examples - creating widgets.  JQuery will be used for some of the DOM manipulation in all examples but isn't the real point here.
 
 ### Widget "Classes" ###
+Parent class: `Widget`, Child class: `Button`
+
+```js
+// Parent Class
+function Widget(width, height) {
+  this.width = width || 50;
+  this.height = height || 50;
+  this.$elem = null;
+}
+
+Widget.prototype.render = function($where) {
+  if (this.$elem) {
+    this.$elem.css( {
+      width: this.width + "px",
+      height: this.height + "px"
+    } ).appendTo( $where );
+  }
+};
+
+// Child Class
+function Button(width, height, label) {
+  // "super" constructor call
+  Widget.call( this, width, height );
+  this.label = label || "Default";
+
+  this.$elem = $( "<button>" ).text( this.label );
+}
+
+// make `Button` "inherit" from `Widget`
+Button.prototype = Object.create( Widget.prototype );
+
+// override base "inherited" `render(..)`
+Button.prototype.render = function($where) {
+  // "super" call
+  Widget.prototype.render.call( this, $where );
+  this.$elem.click( this.onClick.bind( this ) );
+};
+
+Button.prototype.onClick = function(evt) {
+  console.log( "Button '" + this.label + "' clicked!" );
+}
+
+$( document ).ready( function(){
+  var $body = $( document.body );
+  var btn1 = new Button( 125, 30, "Hello" );
+  var btn2 = new Button( 150, 40, "World" );
+
+  btn1.render( $body );
+  btn2.render( $body );
+});
+```
+
+Here, using OO design patterns, we declare a base `render(..)` in `Widget`, then override it in the child class, not replacing it, but instead adding to
+it with button-specific functionality
 
 #### ES6 `class` sugar ####
+The same example using ES6 `class` syntactical sugar:
+
+```js
+class Widget {
+  constructor(width, height) {
+    this.width = width || 50;
+    this.height = height || 50;
+    this.$elem = null;
+  }
+  render($where) {
+    if (this.$elem) {
+      this.$elem.css( {
+        width: this.width + "px",
+        height: this.height + "px"
+      }).appendTo( $where );
+    }
+  }
+}
+
+class Button extends Widget {
+  constructor(width, height, label) {
+    super( width, height);
+    this.label = label || "Default";
+    this.$elem = $( "<button>" ).text( this.label );
+  }
+  render($where) {
+    super.render( $where );
+    this.$elem.click( this.onClick.bind( this ) );
+  }
+  onClick(evt) {
+    console.log( "Button '" + this.label + "' clicked!" );
+  }
+}
+
+$( document ).ready( function(){
+  var $body = $( document.body );
+  var btn1 = new Button( 125, 30, "Hello" );
+  var btn2 = new Button( 150, 40, "World" );
+
+  btn1.render( $body );
+  btn2.render( $body );
+});
+```
+
+Here, the `class` syntax makes a few things cleaner, however this really still uses JS prototypes and not real classes.
 
 ### Delegating Widget Objects ###
+Finally, the same example using delegation (OLOO style):
+
+```js
+var Widget = {
+  init: function(width, height) {
+    this.width = width || 50;
+    this.height = height || 50;
+    this.$elem = null;
+  },
+  insert: function($where) {
+    if (this.$elem) {
+      this.$elem.css( {
+        width: this.width + "px",
+        height: this.height + "px"
+      }).appendTo( $where );
+    }
+  }
+};
+
+var Button = Object.create( Widget );
+
+Button.setup = function(width, height, label) {
+  // delegated call
+  this.init( width, height );
+  this.label = label || "Default";
+
+  this.$elem = $( "<button" ).text( this.label );
+};
+
+Button.build = function($where) {
+  //delegated call
+  this.insert( $where );
+  this.$elem.click( this.onClick.bind( this ) );
+};
+
+Button.onClick = function(evt) {
+  console.log( "Button '" + this.label + "' clicked!" );
+};
+
+$( document ).ready( function(){
+  var $body = $( document.body );
+  var btn1 = Object.create( Button );
+  btn1.setup( 125, 30, "Hello" );
+  
+  var btn2 = Object.create( Button );
+  btn2.setup( 150, 40, "World" );
+
+  btn1.build( $body );
+  btn2.build( $body );
+});
+```
+
+In this approach, `Widget` is no longer the "parent" to `Button`.  Instead, it's just an object with utility methods that any widget might want to 
+delegate to.  `Button` is just an object, linked to `Widget`.
+
+Different names were used for methods (`insert(..)` and `build(..)`, for example), which allowed them to be more descriptive.  Additionally, ugly 
+explicity pseudo-polymorphic calls (`Widget.call` and `Widget.prototype.render.call`) were avoided by instead using simple `this.init(..)` and 
+`this.insert(..)` calls.
+
+No constructors, `.prototype`, or `new` were used.  There was an additional call made, however, as now creating a button involves two steps, but this
+allows creation and initialization to occur at separate points in time, which may be beneficial in certain circumstances.
 
 ## Simpler Design ##
 
