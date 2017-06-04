@@ -305,8 +305,189 @@ No constructors, `.prototype`, or `new` were used.  There was an additional call
 allows creation and initialization to occur at separate points in time, which may be beneficial in certain circumstances.
 
 ## Simpler Design ##
+While OLOO can simplify code, it can also simplify architecture.
+
+An example of two controller objects, one that handles web login form, and another to handle server authentication:
+
+```js
+// Parent Class
+function Controller() {
+  this.errors = [];
+}
+Controller.prototype.showDialog = function(title, msg) {
+  // display title & message to user in dialog
+};
+Controller.prototype.success = function(msg) {
+  this.showDialog( "Success", msg );
+};
+Controller.prototype.failure = function(err) {
+  this.errors.push( err );
+  this.showDialog( "Error", err );
+}
+```
+
+```js
+// Child Class
+function LoginController() {
+  Controller.call( this );
+}
+
+// Link child class to parent
+LoginController.prototype = Object.create( Controller.prototype );
+LoginController.prototype.getUser = function() {
+  return document.getElementById( "login_username" ).value;
+};
+LoginController.prototype.getPassword = function() {
+  return document.getElementById( "login_password" ).value;
+};
+LoginController.prototype.validateEntry = function(user, pw) {
+  user = user || this.getUser();
+  pw = pw || this.getPassword();
+
+  if (!(user && pw)) {
+    return this.failure( "Please enter a username & password!" );
+  }
+  else if (pw.length < 5) {
+    return this.failure( "Password must be 5+ characters!" );
+  }
+
+  // validated user
+  return true;
+};
+// Override to extend base `failure()`
+LoginController.prototype.failure = function(err) {
+  // "super" call
+  Controller.prototype.failure.call( this, "Login invalid: " + err );
+};
+```
+
+```js
+// Child class
+function AuthController(login) {
+  Controller.call(this);
+  // in addition to inheritance, we need composition
+  this.login = login;
+}
+// link child class to parent
+AuthController.prototype = Object.create( Controller.prototype );
+AuthController.prototype.server = function(url, data) {
+  return $.ajax( {
+    url: url,
+    data: data
+  });
+};
+AuthController.prototype.checkAuth = function() {
+  var user = this.login.getUser();
+  var pw = this.login.getPassword();
+
+  if (this.login.validateEntry( user, pw)) {
+    this.server( "/check-auth", {
+      user: user,
+      pw: pw
+    })
+    .then( this.success.bind( this ))
+    .fail( this.failure.bind( this ));
+  }
+};
+// Override to extend base `success()`
+AuthController.prototype.success = function() {
+  // "super" call
+  Controller.prototype.success.call( this, "Authenticated!" );
+};
+
+// Override to extend base `failure()`
+AuthController.prototype.failure = function(err) {
+  // "super" call
+  Controller.prototype.failure.call( this, "Auth failed: " + err);
+};
+```
+
+```js
+var auth = new AuthController(
+  // in addition to inheritance, need composition
+  new LoginController()
+);
+auth.checkAuth();
+```
+
+The `success(..)`, `failure(..)`, and `showDialog(..)` behaviors are shared by all controllers here.  The child classes then override `success` and 
+`failure` to add to base class behavior.
 
 ### De-class-ified ###
+OLOO design can greatly simplify the architecture, however:
+
+```js
+var LoginController = {
+  errors: [],
+  getUser: function() {
+    return document.getElementById( "login_username" ).value;
+  },
+  getPassword: function() {
+    return document.getElementById( "login_password" ).value;
+  },
+  validateEntry: function(user, pw) {
+    user = user || this.getUser();
+    pw = pw || this.getPassword();
+
+    if (!(user && pw)) {
+      return this.failure( "Please enter a username & password!" );
+    }
+    else if (pw.length < 5 ) {
+      return this.failure( "Password must be 5+ characters!" );
+    }
+
+    //validated
+    return true;
+  },
+  showDialog: function(title, msg) {
+    // display success message to user in dialog
+  },
+  failure: function(err) {
+    this.errors.push( err );
+    this.showDialog( "Error", "Login invalid: " + err) ;
+  }
+};
+```
+
+```js
+// Link `AuthController` to delegate to `LoginController`
+var AuthController = Object.create( LoginController );
+
+AuthController.errors = [];
+AuthController.checkAuth = function() {
+  var user = this.getUser();
+  var pw = this.getPassword();
+
+  if (this.validateEntry(user, pw)) {
+    this.server( "/check-auth", {
+      user: user,
+      pw: pw
+    })
+    .then( this.accepted.bind( this ) )
+    .fail( this.accepted.bind( this ) );
+  }
+};
+AuthController.server = function(url, data) {
+  return $.ajax( {
+    url: url,
+    data: data
+  });
+};
+AuthController.accepted = function() {
+  this.showDialog( "Success", "Authenticated!" );
+};
+AuthController.rejected = function(err) {
+  this.failure( "Auth Failed: " + err );
+};
+```
+
+```js
+AuthController.checkAuth();
+```
+
+With delegation, `AuthController` and `LoginController` are just objects, horizontal peers of one another.  We could have reversed the direction of 
+delegation if desired.  Now we only have two entities, instead of three as before (the parent class).  There is no need to instantiate classes, nor
+need for composition, because of the power of delegation.
 
 ## Nicer Syntax ##
 
