@@ -117,12 +117,46 @@ place, the `++` operation ends up creating a shadowed property on `myObject`
 instead.  Care should be exercised.
 
 ## "Class" ##
+JavaScript only has objects.  There are no true classes that instantiate 
+objects.
 
 ### "Class" Functions ###
+Because of the public, non-enumerable property `prototype` that exists on
+each function, there has been a lot of confusion over the years on what
+this prototype object (linked to the function) does, and a lot of effort has
+gone into to trying to use it for OOP purposes.
+
+```js
+function Foo() {
+  //
+}
+
+var a = new Foo();
+
+Object.getPrototypeOf( a ) === Foo.prototype; // true
+```
+
+A link to `Foo.prototype` is created when `a = new Foo()` is called.  No 
+copying occurs, however, only a linkage.  No class instantiation has occurred,
+nor any copying of behavior from a "class" into an object's instance.  This is
+often referred to as **prototypal inheritance**, but really that's an effort
+to shove it into the OOP framework.
+
+In JavaScript, rather than copying anything, links are created between objects,
+and one object can delegate properties or functions to another object.  This
+delegation is a more accurate description of what's happening than inheritance.
 
 ### "Constructors" ###
+While JavaScript does use the `new` keyword which is reminiscent of OOP 
+languages, it's really not the same as constructing the instance of a class.
 
 #### Constructor Or Call? ####
+Despite being called in similar manner to OOP languages, the "constructors"
+that precede `.new` are not actually constructors.  Functions are not 
+constructors, though putting `new` in front of them makes it act a little 
+differently in addition to its normal functionality.  A new object is 
+constructed, but as more of a side-effect.  Any function with the `new` keyword
+in front of it is essentially a constructor call.
 
 ### Mechanics ###
 
