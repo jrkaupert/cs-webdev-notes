@@ -25,6 +25,9 @@ revert to using `.prototype`.  Accidental shadowing is a likelihood if not caref
 how to bind it, but sometiems you might have to manually take care of it to get it right
 
 ## Static > Dynamic? ##
+`class` makes things in JS static, defined at class definition.  JS is dynamic by nature, however, so it's taking away some of the power of the language
+while simultaneously making things less clear.
 
+`class` doesn't really fix the class and inheritance design pattern in JavaScript, and actually makes things worse in some ways.
 
 [Table of Contents](_toc.md)
