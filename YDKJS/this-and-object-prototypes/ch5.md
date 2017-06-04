@@ -159,10 +159,90 @@ constructed, but as more of a side-effect.  Any function with the `new` keyword
 in front of it is essentially a constructor call.
 
 ### Mechanics ###
+In addition to constructors, devs have found other ways to make JavaScript
+act similarly to OOP languages:
+
+```js
+function Foo(name) {
+  this.name = name;
+}
+
+Foo.prototype.myName = function() {
+  return this.name;
+};
+
+var a = new Foo( "a" );
+var b = new Foo( "b" );
+
+a.myName(); // "a"
+b.myName(); // "b"
+```
+
+The use of `this.name = name` adds a property onto each object, which is
+similar to OOP class instance fields.  `Foo.prototype.myName = ...` adds
+a function to the `Foo.prototype` object, which allows `a.myName()` to work.
+
+No copying of properties is occurring, however.  Instead, because of the 
+prototype link, `a` and `b` are linked to `Foo.prototype` and when `myName` is
+not located on `a` or `b`, it can be found via delegation on `Foo.prototype` 
+instead.
 
 #### "Constructor" Redux ####
+Despite there being a `.constructor` property, an object's `.constructor` 
+property does not point to its constructor.  This reference is delegated up 
+to the object's prototype instead, which also happens to have a `.constructor`
+property pointing to it.  Even then, that object's constructor property may 
+point all the way up to `Object(..)`.  Thus, it does not do a lot of good to
+worry about this property in a traditional OOP sense.
+
+`.constructor` artibrarily points to a function, and does not mean "constructed
+by".  The `constructor` value is not immutable, and can be overwritten either
+on purpose on on accident.  It is extremely unreliable, and not safe to use
+as a reference in code.
 
 ## "(Prototypal) Inheritance" ##
+Typical "prototype" style code in JavaScript for creating "parent-child" links:
+
+```js
+function Foo(name) {
+  this.name = name;
+}
+
+Foo.prototype.myName = function() {
+  return this.name;
+}
+
+function Bar(name, label) {
+  Foo.call(this, name);
+  this.label = label;
+}
+
+Bar.prototype = Object.create( Foo.prototype );
+
+Bar.prototype.myLabel = function() {
+  return this.label;
+};
+
+var a = new Bar( "a", "obj a" );
+
+a.myName(); // "a"
+a.myLabel(); // "obj a"
+```
+
+Here, `Object.create(..)` makes a 'new' object, and links its prototype to the
+specified object `Foo.prototype`.
+
+Another way to link `Bar.prototype` to `Foo.prototype`:
+
+```js
+// pre-ES6
+// throws away default existing `Bar.prototype`
+Bar.prototype = Object.create( Foo.prototype );
+
+// ES6+
+// modifies existing `Bar.prototype`
+Object.setPrototypeOf( Bar.prototype, Foo.prototype );
+```
 
 ### Inspecting "Class" Relationships ###
 
