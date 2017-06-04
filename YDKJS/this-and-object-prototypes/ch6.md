@@ -71,10 +71,69 @@ Note: it's better to use delegation as an internal implementation detail rather 
 to others using the API.
 
 #### Mutual Delegation (Disallowed) ####
-
-#### Debugged ####
+It is not possible to have objects delegate to one another mutually (ie: B to A and A to B)
 
 ### Mental Models Compared ###
+A "prototypal" OO style example:
+
+```js
+function Foo(who) {
+  this.me = who;
+}
+Foo.prototype.identify = function() {
+  return "I am " + this.me;
+};
+
+function Bar(who) {
+  Foo.call( this, who );
+}
+Bar.prototype = Object.create( Foo.prototype );
+
+Bar.prototype.speak = function() {
+  alert("Hello, " + this.identify() + ".");
+};
+
+var b1 = new Bar( "b1" );
+var b2 = new Bar( "b2" );
+
+b1.speak();
+b2.speak();
+```
+
+Here, a parent `Foo` class is created, which is inherited by `Bar`, which then has two instances `b1`, and `b2` instantiated.  The `b1` object delegates
+to `Bar.prototype`, which delegates to `Foo.prototype`.
+
+Same example, using OLOO style code:
+
+```js
+var Foo = {
+  init: function(who) {
+    this.me = who;
+  },
+  identify: function() {
+    return "I am " + this.me;
+  }
+};
+
+// link to Foo
+var Bar = Object.create( Foo );
+
+Bar.speak = function() {
+  alert( "Hello, " + this.identify() + ".");
+};
+
+var b1 = Object.create( Bar );
+b1.init( "b1" );
+var b2 = Object.create( Bar );
+b2.init( "b2" );
+
+b1.speak();
+b2.speak();
+```
+
+In this version, the same prototype delegation from `b1` to `Bar` to `Foo` is used.  There are no things that look like classes, constructors, use of 
+`prototype`, or `new` calls.  OLOO code is simpler because it only cares that objects get linked to other objects.  Classes, constructors, prototype, and
+`new` calls are a lot of extra stuff to force the OOP design pattern onto JS code.
 
 ## Classes vs. Objects ##
 
