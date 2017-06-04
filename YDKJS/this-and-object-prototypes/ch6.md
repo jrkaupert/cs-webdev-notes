@@ -490,10 +490,67 @@ delegation if desired.  Now we only have two entities, instead of three as befor
 need for composition, because of the power of delegation.
 
 ## Nicer Syntax ##
+ES6 provides a means for **concise method declarations** that can be used with or without the `class` modifier and omits the need for typing out
+`function`:
+
+```js
+class Foo {
+  methodName() {..}
+}
+```
+
+without using `class`:
+
+```js
+var LoginController = {
+  errors: [],
+  getUser() {..}
+}
+```
+
+Additionally, ES6 offers some additional benefits for OLOO style programming:
+
+```js
+// use nicer object literal syntax with concise methods:
+var AuthController = {
+  errors: [],
+  checkAuth() {
+    //
+  },
+  server(url, data) {
+    //
+  }
+  //
+};
+
+// Now link
+Object.setPrototypeOf( AuthController, LoginController )
+```
 
 ### Unlexical ###
+Using concise methods does have the drawback of making the shorthand functions *anonymous* function expressions, which removes the lexical identifier
+and has the following downside from having no associated `name`:
+
+- self-referencing (recursion, event binding) is harder
 
 ## Introspection ##
+Type introspection (and duck-typing) are not particularly clean when using OO-style JavaScript (particularly `instanceof`).  When using OLOO, however, 
+things become cleaner:
+
+```js
+var Foo = {..}
+var Bar = Object.create( Foo );
+var b1 = Object.create( Bar );
+
+// relating `Foo` and `Bar` to each other
+Foo.isPrototypeOf( Bar ); //true
+Object.getPrototypeOf( Bar ) === Foo; // true
+
+// relating `b1` to both `Foo` and `Bar`
+Foo.isPrototypeOf( b1 ); //true
+Bar.isPrototypeOf( b1 ); //true
+Object.getPrototypeOf( b1 ) === Bar; //true
+```
 
 [Table of Contents](_toc.md)
 
