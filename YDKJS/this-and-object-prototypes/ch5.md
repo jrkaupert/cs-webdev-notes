@@ -245,6 +245,36 @@ Object.setPrototypeOf( Bar.prototype, Foo.prototype );
 ```
 
 ### Inspecting "Class" Relationships ###
+How to figure out what object(s) are delegated to?
+
+```js
+Foo.prototype.isPrototypeOf( a ); // true
+```
+
+Here we need an object (`Foo.prototype`) to test against another object. It 
+checks the entire `[[Prototype]]` chain of `a`, looking to see if `Foo.prototype`
+ever exists.
+
+Another example:
+
+```js
+b.isPrototypeOf( c );
+```
+
+All this requires is two object references.  No gymnastics to make things like
+OOP.
+
+To get an object's prototype:
+
+```js
+// ES5
+Object.getPrototypeOf( a );
+
+// ES6+
+a.__proto__; // exists on Object.prototype, not on `a`
+```
+
+
 
 ## Object Links ##
 
