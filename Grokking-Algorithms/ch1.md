@@ -98,7 +98,13 @@ absolute slowest an algorithm will perform
 > **Exercise 1.6** - You want to read the numbers of just the A's
 >
 > **Answer:** - *O(n)* linear time
->
+
+## The Traveling Salesperson
+A classic problem with a notoriously bad running time, believed to be
+impossible to improve upon.  What's the route a salesperson should take to
+travel between *n* cities while traveling the minimum distance?  For *n* items,
+solving this problem takes *O(n!)* or *factorial* time.  Approximate solutions
+can be obtained, but a fast, exact solution is believed to be impossible
 
 
 
