@@ -31,6 +31,30 @@ being moved
 
 > **Linked lists** let items be stored anywhere in memory (random locations)
 
+Linked lists store the address of the next item in the list, which is used
+to maintain the order of the list
+
+With linked lists, the items never have to be moved if the array gets too big
+to hold things in contiguous memory.  As long as there's enough space in
+memory overall, you're fine.
+
+Thus, linked lists are great for inserting items
+
+Unfortunately, if you want to view items at a certain point in a linked list,
+you have to go item by item until you get to the one you want.
+
+Arrays let you go immediately to any item in the array, because the address is
+known absolutely
+
+Arrays are good for reading random elements, unlike linked lists
+
+Run times for reading and inserting using arrays and linked lists:
+
+|         | Arrays | Lists |
+| --------| :----: | :---: |
+| Reading | O(1)   | O(n)  |
+| Insert  | O(n)   | O(1)  |
+
 ## Selection Sort
 
 [Table of Contents](_toc.md)
