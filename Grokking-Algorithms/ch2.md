@@ -55,6 +55,13 @@ Run times for reading and inserting using arrays and linked lists:
 | Reading | O(1)   | O(n)  |
 | Insert  | O(n)   | O(1)  |
 
+> **Exercise 2.1** - Suppose you're building a finance tracking app.  Every
+day you write down everything you spent money on.  At the end of the month,
+you review your expenses and sum up how much you spent.  You have lots of
+inserts and few reads.  Would it be better to use an array or a list for this?
+>
+> **Answer:** - Linked list
+
 ## Selection Sort
 
 [Table of Contents](_toc.md)
